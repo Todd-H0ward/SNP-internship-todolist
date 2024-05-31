@@ -1,14 +1,26 @@
-import {TodoList} from "./todoList";
+import {TodoList} from "./todoList.js";
 
 const input = document.querySelector(".input");
 const tasksWrapper = document.querySelector(".tasks-wrapper");
-
 const todoList = new TodoList(".tasks-wrapper");
 
-console.log(todoList.tasks);
-todoList.addTask("some 1");
-todoList.addTask("some 2");
-todoList.addTask("some 3");
-todoList.addTask("some 4");
-console.log(todoList.tasks);
-todoList.renderTasks();
+const addTask = () => {
+    todoList.addTask(input.value);
+    input.value = "";
+
+    console.log(todoList.tasks);
+}
+
+input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        addTask();
+    }
+})
+
+tasksWrapper.addEventListener("click", (event) => {
+    const elem = event.target;
+    if (elem.classList.contains("checkbox")) {
+        const elemId = elem.closest(".task").dataset.id;
+        todoList.toggleActive(Number(elem));
+    }
+})

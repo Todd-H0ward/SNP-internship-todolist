@@ -1,0 +1,11 @@
+@import "../utils/variables";
+
+.task {
+    color: $black;
+    padding: 20px;
+    background: $white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid $gray-300;
+}
