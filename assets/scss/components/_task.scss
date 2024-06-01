@@ -8,4 +8,29 @@
     align-items: center;
     gap: 20px;
     border-bottom: 1px solid $gray-300;
+    transition: all .2s;
+
+    &__inner {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__btn {
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: opacity .2s;
+    }
+
+    &--finished {
+        color: $gray-300;
+        text-decoration: line-through;
+    }
+
+    &:hover &__btn {
+        opacity: 1;
+    }
 }
