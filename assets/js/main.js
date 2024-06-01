@@ -25,6 +25,15 @@ const toggleTaskActivity = (elem) => {
 const deleteTask = (elem) => {
     const elemId = Number(elem.dataset.id);
     todoList.removeTask(elemId);
+    updateTasksCount();
+}
+
+const changeTitle = (elem, task) => {
+    const elemId = Number(task.dataset.id);
+    elem.setAttribute("contenteditable", true);
+    elem.addEventListener("blur", () => {
+        todoList.changeTitle(elemId, elem.textContent);
+    })
 }
 
 input.addEventListener("keydown", (event) => {
@@ -46,8 +55,8 @@ tasksWrapper.addEventListener("click", (event) => {
 
 tasksWrapper.addEventListener("dblclick", (event) => {
     const elem = event.target;
+    const task = elem.closest(".task");
     if (elem.classList.contains("title")) {
-        const elemId = elem.closest(".task").dataset.id;
-        todoList.changeTitle(Number(elemId));
+        changeTitle(elem, task);
     }
 })

@@ -39,4 +39,14 @@ body {
         border-radius: $border-radius;
         overflow: hidden;
     }
+
+    &__controls {
+        display: flex;
+        background: $white;
+        color: $black;
+        padding: 5px 10px;
+        position: relative;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
