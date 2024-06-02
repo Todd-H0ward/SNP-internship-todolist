@@ -18,7 +18,7 @@ body {
 .container {
     max-width: 660px;
     width: 100%;
-    padding: 0 30px;
+    padding: 0 clamp(15px, 3vw, 30px);
     margin: 0 auto;
 }
 
@@ -32,6 +32,7 @@ body {
 
     &__title {
         @extend .h1;
+        padding: 10px 0;
         text-align: center;
     }
 
@@ -41,7 +42,7 @@ body {
     }
 
     &__controls {
-        display: flex;
+        display: none;
         background: $white;
         color: $black;
         padding: 5px 10px;

@@ -1,6 +1,7 @@
 import {TodoList} from "./todoList.js";
 
 const input = document.querySelector(".input");
+const controls = document.querySelector(".controls");
 const tasksWrapper = document.querySelector(".tasks-wrapper");
 const controlsNumber = document.querySelector(".controls__number");
 const todoButtons = document.querySelectorAll(".todos__btn");
@@ -16,6 +17,11 @@ const addTask = () => {
 
 const updateTasksCount = () => {
     controlsNumber.textContent = String(todoList.getTasksCount());
+    if (todoList.tasks.length === 0) {
+        controls.style.display = "none";
+    } else {
+        controls.style.display = "flex";
+    }
 }
 
 const toggleTaskActivity = (elem) => {
