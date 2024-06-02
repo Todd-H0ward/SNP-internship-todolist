@@ -3,6 +3,8 @@ import {TodoList} from "./todoList.js";
 const input = document.querySelector(".input");
 const tasksWrapper = document.querySelector(".tasks-wrapper");
 const controlsNumber = document.querySelector(".controls__number");
+const todoButtons = document.querySelectorAll(".todos__btn");
+
 const todoList = new TodoList(".tasks-wrapper");
 
 const addTask = () => {
@@ -13,7 +15,7 @@ const addTask = () => {
 }
 
 const updateTasksCount = () => {
-    controlsNumber.textContent = String(todoList.tasks.length);
+    controlsNumber.textContent = String(todoList.getTasksCount());
 }
 
 const toggleTaskActivity = (elem) => {
@@ -35,6 +37,18 @@ const changeTitle = (elem, task) => {
         todoList.changeTitle(elemId, elem.textContent);
     })
 }
+
+const clearActiveButton = () => {
+    todoButtons.forEach(btn => btn.classList.remove("button--active"));
+}
+
+todoButtons.forEach(btn => btn.addEventListener("click", () => {
+    clearActiveButton();
+    btn.classList.add("button--active");
+    const filterValue = btn.dataset.filter;
+    todoList.setFilter(filterValue);
+    updateTasksCount();
+}))
 
 input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {

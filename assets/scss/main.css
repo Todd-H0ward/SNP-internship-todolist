@@ -158,7 +158,7 @@ meter {
   padding: 3px 10px;
   border-radius: 5px;
   color: #1B1F2B;
-  border: 1px solid #1B1F2B;
+  outline: 1px solid #1B1F2B;
   cursor: pointer;
   transition: background 0.4s, color 0.2s;
 }
@@ -169,6 +169,12 @@ meter {
 .button:active {
   background: #1B1F2B;
   color: #FFF;
+}
+.button--active {
+  outline: 3px solid #286562;
+}
+.button--active:hover {
+  background: rgba(40, 101, 98, 0.4);
 }
 
 /* Colors */
@@ -282,6 +288,10 @@ body {
   position: relative;
   justify-content: space-between;
   align-items: center;
+}
+.todos__filters {
+  display: flex;
+  gap: 7px;
 }
 
 /*# sourceMappingURL=main.css.map */
