@@ -4,7 +4,7 @@
     padding: 3px 10px;
     border-radius: 5px;
     color: $black;
-    border: 1px solid $black;
+    outline: 1px solid $black;
     cursor: pointer;
     transition: background .4s, color .2s;
 
@@ -16,5 +16,13 @@
     &:active {
         background: $black;
         color: $white;
+    }
+
+    &--active {
+        outline: 3px solid $green-400;
+
+        &:hover {
+            background: rgba($green-400, 0.4);
+        }
     }
 }
