@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo list</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="assets/scss/main.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="todos">
+            <div class="todos__container container">
+                <div class="todos__inner">
+                    <h1 class="todos__title">Todos</h1>
+                    <input class="todos__input input" type="text" placeholder="What needs to be done?">
+
+                    <div class="todos__tasks tasks-wrapper"></div>
+
+                    <div class="todos__controls controls">
+                        <p class="controls__text">
+                            <span class="controls__number"></span> items left
+                        </p>
+                        <div class="todos__filters filter">
+                            <button class="todos__btn button button--active" data-filter="all">All</button>
+                            <button class="todos__btn button" data-filter="active">Active</button>
+                            <button class="todos__btn button" data-filter="completed">Completed</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/todoList.js" type="module" defer></script>
+    <script src="assets/js/main.js" type="module" defer></script>
+</body>
+</html>

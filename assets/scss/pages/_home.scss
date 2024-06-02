@@ -1,0 +1,57 @@
+@import "../utils/variables";
+
+body {
+    @extend .p-normal;
+    font-family: Roboto, sans-serif;
+    color: $white;
+    font-style: normal;
+    background: $black;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 660px;
+    width: 100%;
+    padding: 0 30px;
+    margin: 0 auto;
+}
+
+// Todos
+
+.todos {
+    &__inner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__title {
+        @extend .h1;
+        text-align: center;
+    }
+
+    &__tasks {
+        border-radius: $border-radius;
+        overflow: hidden;
+    }
+
+    &__controls {
+        display: flex;
+        background: $white;
+        color: $black;
+        padding: 5px 10px;
+        position: relative;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__filters {
+        display: flex;
+        gap: 7px;
+    }
+}
