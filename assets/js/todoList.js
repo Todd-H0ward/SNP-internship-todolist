@@ -36,6 +36,11 @@ export class TodoList {
         this.renderTasks();
     }
 
+    toggleAllActive() {
+        this.tasks.forEach(task => task.isActive = false);
+        this.renderTasks();
+    }
+
     getFilteredTasks() {
         if (this.filter === "active") {
             return this.tasks.filter(task => task.isActive);
@@ -47,6 +52,11 @@ export class TodoList {
 
     getTasksCount() {
         return this.getFilteredTasks().length;
+    }
+
+    clearFinished() {
+        this.tasks = this.tasks.filter(task => task.isActive);
+        this.renderTasks();
     }
 
     renderTasks() {

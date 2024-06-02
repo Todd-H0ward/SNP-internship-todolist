@@ -18,7 +18,7 @@ body {
 .container {
     max-width: 660px;
     width: 100%;
-    padding: 0 30px;
+    padding: 0 clamp(15px, 3vw, 30px);
     margin: 0 auto;
 }
 
@@ -32,7 +32,26 @@ body {
 
     &__title {
         @extend .h1;
+        padding: 10px 0;
         text-align: center;
+    }
+
+    &__wrapper {
+        position: relative;
+    }
+
+    &__input {
+        width: 100%;
+    }
+
+    &__arrow {
+        display: none;
+        position: absolute;
+        top: 55%;
+        left: 10px;
+        transform: translateY(-50%);
+        z-index: 5;
+        cursor: pointer;
     }
 
     &__tasks {
@@ -41,7 +60,7 @@ body {
     }
 
     &__controls {
-        display: flex;
+        display: none;
         background: $white;
         color: $black;
         padding: 5px 10px;
@@ -53,5 +72,25 @@ body {
     &__filters {
         display: flex;
         gap: 7px;
+    }
+
+    &__clear {
+        position: relative;
+        cursor: pointer;
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            margin: 0 auto;
+            background: $black;
+            transition: width .3s;
+        }
+        &:hover::after {
+            width: 100%;
+        }
     }
 }

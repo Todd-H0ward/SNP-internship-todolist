@@ -1,9 +1,12 @@
 import {TodoList} from "./todoList.js";
 
 const input = document.querySelector(".input");
+const controls = document.querySelector(".controls");
 const tasksWrapper = document.querySelector(".tasks-wrapper");
 const controlsNumber = document.querySelector(".controls__number");
 const todoButtons = document.querySelectorAll(".todos__btn");
+const arrowButton = document.querySelector(".arrow-btn");
+const clearButton = document.querySelector(".clear");
 
 const todoList = new TodoList(".tasks-wrapper");
 
@@ -16,6 +19,13 @@ const addTask = () => {
 
 const updateTasksCount = () => {
     controlsNumber.textContent = String(todoList.getTasksCount());
+    if (todoList.tasks.length === 0) {
+        controls.style.display = "none";
+        arrowButton.style.display = "none";
+    } else {
+        controls.style.display = "flex";
+        arrowButton.style.display = "block";
+    }
 }
 
 const toggleTaskActivity = (elem) => {
@@ -73,4 +83,13 @@ tasksWrapper.addEventListener("dblclick", (event) => {
     if (elem.classList.contains("title")) {
         changeTitle(elem, task);
     }
+})
+
+arrowButton.addEventListener("click", () => {
+    todoList.toggleAllActive();
+})
+
+clearButton.addEventListener("click", () => {
+    todoList.clearFinished();
+    updateTasksCount();
 })
