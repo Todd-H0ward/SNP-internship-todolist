@@ -127,6 +127,13 @@ meter {
   line-height: 142%;
 }
 
+.p-small, .todos__hint, .todos__controls {
+  font-size: clamp(14px, 3vw, 17px);
+  font-weight: 400;
+  line-height: 142%;
+  letter-spacing: -0.17px;
+}
+
 /* Colors */
 /* Colors */
 .button {
@@ -175,7 +182,7 @@ meter {
 
 /* Colors */
 .input {
-  padding: clamp(10px, 2.5vw, 20px) 70px;
+  padding: clamp(10px, 2.5vw, 20px) clamp(10px, 2.5vw, 20px) clamp(10px, 2.5vw, 20px) 70px;
   border: 1px solid #A6A6A6;
   border-radius: 10px;
   background: #FFF;
@@ -203,6 +210,9 @@ meter {
   border-bottom: 1px solid #A6A6A6;
   transition: all 0.2s;
 }
+.task__title {
+  word-break: break-all;
+}
 .task__inner {
   flex: 1 1 auto;
   display: flex;
@@ -219,6 +229,12 @@ meter {
 .task--finished {
   color: #A6A6A6;
   text-decoration: line-through;
+}
+.task--active {
+  border: 3px solid #3B7E7B;
+  -webkit-box-shadow: inset 3px 3px 10px 0 rgba(59, 126, 123, 0.75);
+  -moz-box-shadow: inset 3px 3px 10px 0 rgba(59, 126, 123, 0.75);
+  box-shadow: inset 3px 3px 10px 0 rgba(59, 126, 123, 0.75);
 }
 .task:hover .task__btn {
   opacity: 1;
@@ -242,13 +258,14 @@ body {
 .container {
   max-width: 660px;
   width: 100%;
-  padding: 0 clamp(15px, 3vw, 30px);
+  padding: 0 clamp(10px, 3vw, 30px);
   margin: 0 auto;
 }
 
 .todos__inner {
   display: flex;
   flex-direction: column;
+  margin-bottom: 65px;
 }
 .todos__title {
   padding: 10px 0;
@@ -275,6 +292,7 @@ body {
 }
 .todos__controls {
   display: none;
+  flex-wrap: wrap;
   background: #FFF;
   color: #1B1F2B;
   padding: 5px 10px;
@@ -282,9 +300,16 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+.todos__text {
+  flex: none;
+}
 .todos__filters {
   display: flex;
+  flex: none;
   gap: 7px;
+}
+.todos__hint {
+  text-align: center;
 }
 .todos__clear {
   position: relative;

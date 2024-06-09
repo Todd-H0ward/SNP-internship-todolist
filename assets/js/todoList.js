@@ -1,78 +1,100 @@
 export class TodoList {
-    constructor(todoClass) {
-        this.tasks = [];
-        this.taskWrapper = document.querySelector(todoClass);
-        this.filter = "all";
-    }
+	constructor(todoClass) {
+		this.tasks = [];
+		this.taskWrapper = document.querySelector(todoClass);
+		this.filter = "all";
+		this.renderTasks();
+	}
 
-    addTask(title) {
-        const date = new Date();
-        this.tasks.push({
-            id: date.getTime(),
-            title,
-            isActive: true
-        })
+	addTask(title) {
+		const task = {
+			id: Date.now(),
+			title,
+			isActive: true,
+			elem: null,
+		};
 
-        this.renderTasks();
-    }
+		task.elem = this.createTaskElement(task);
 
-    removeTask(taskId) {
-        this.tasks = this.tasks.filter(task => task.id !== taskId);
-        this.renderTasks();
-    }
+		this.tasks.push(task);
+		this.taskWrapper.appendChild(task.elem);
+	}
 
-    toggleActive(taskId) {
-        const todo = this.tasks.find(task => task.id === taskId);
-        todo.isActive = !todo.isActive;
-    }
+	createTaskElement(task) {
+		const taskElem = document.createElement("div");
+		taskElem.classList.add("task");
+		taskElem.setAttribute("data-id", task.id);
+		taskElem.innerHTML = `
+            <input class="task__checkbox checkbox" type="checkbox"> 
+            <div class="task__inner">
+                <p class="task__title title">${task.title}</p>
+                <button class="task__btn">
+                    <img class="delete" src="assets/icons/cross.svg" alt="delete icon">
+                </button>
+            </div>
+        `;
+		return taskElem;
+	}
 
-    changeTitle(taskId, newTitle) {
-        const todo = this.tasks.find(task => task.id === taskId);
-        todo.title = newTitle;
-    }
+	findTask(taskId) {
+		return this.tasks.find(task => task.id === taskId);
+	}
 
-    setFilter(filter) {
-        this.filter = filter;
-        this.renderTasks();
-    }
+	removeTask(taskId) {
+		const currentTask = this.findTask(taskId).elem;
+		currentTask.remove();
+	}
 
-    toggleAllActive() {
-        this.tasks.forEach(task => task.isActive = false);
-        this.renderTasks();
-    }
+	toggleActive(taskId) {
+		const task = this.findTask(taskId);
+		task.isActive = !task.isActive;
+	}
 
-    getFilteredTasks() {
-        if (this.filter === "active") {
-            return this.tasks.filter(task => task.isActive);
-        } else if (this.filter === "completed") {
-            return this.tasks.filter(task => !task.isActive);
-        }
-        return this.tasks;
-    }
+	changeTitle(taskId, newTitle) {
+		const task = this.findTask(taskId);
+		if (task) {
+			task.title = newTitle;
+			task.elem.querySelector(".title").textContent = newTitle;
+		}
+	}
 
-    getTasksCount() {
-        return this.getFilteredTasks().length;
-    }
+	setFilter(filter) {
+		this.filter = filter;
+		this.renderTasks();
+	}
 
-    clearFinished() {
-        this.tasks = this.tasks.filter(task => task.isActive);
-        this.renderTasks();
-    }
+	toggleAllActive() {
+		console.log(this.tasks);
+		const isAllActive = this.tasks.every(task => task.isActive);
+		console.log(isAllActive);
+		this.tasks.forEach(task => {
+			task.isActive = !task.isActive;
+			task.elem.querySelector(".checkbox").checked = !task.isActive;
+			task.elem.classList.toggle("task--finished", !task.isActive);
+		});
+	}
 
-    renderTasks() {
-        let tasksToRender = this.getFilteredTasks();
+	getFilteredTasks() {
+		if (this.filter === "active") {
+			return this.tasks.filter(task => task.isActive);
+		} else if (this.filter === "completed") {
+			return this.tasks.filter(task => !task.isActive);
+		}
+		return this.tasks;
+	}
 
-        const tasks = tasksToRender.map(task =>
-            `<div class="task ${!task.isActive ? "task--finished" : ""}" data-id="${task.id}">
-                <input class="task__checkbox checkbox" type="checkbox" ${!task.isActive ? "checked" : ""}> 
-                <div class="task__inner">
-                    <p class="task__title title" data-id="${task.id}">${task.title}</p>
-                    <button class="task__btn">
-                        <img class="delete" src="assets/icons/cross.svg" alt="delete icon">
-                    </button>
-                </div>
-            </div>`
-        );
-        this.taskWrapper.innerHTML = tasks.join("");
-    }
+	getTasksCount() {
+		return this.getFilteredTasks().length;
+	}
+
+	clearFinished() {
+		this.tasks = this.tasks.filter(task => task.isActive);
+		this.renderTasks(this.tasks);
+	}
+
+	renderTasks(tasks) {
+		const taskToRender = tasks ?? this.getFilteredTasks();
+		this.taskWrapper.innerHTML = "";
+		taskToRender.forEach(task => this.taskWrapper.appendChild(task.elem));
+	}
 }

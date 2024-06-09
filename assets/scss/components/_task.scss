@@ -10,6 +10,10 @@
     border-bottom: 1px solid $gray-300;
     transition: all .2s;
 
+    &__title {
+        word-break: break-all;
+    }
+
     &__inner {
         flex: 1 1 auto;
         display: flex;
@@ -28,6 +32,13 @@
     &--finished {
         color: $gray-300;
         text-decoration: line-through;
+    }
+
+    &--active {
+        border: 3px solid $green-300;
+        -webkit-box-shadow: inset 3px 3px 10px 0 rgba($green-300, 0.75);
+        -moz-box-shadow: inset 3px 3px 10px 0 rgba($green-300, 0.75);
+        box-shadow: inset 3px 3px 10px 0 rgba($green-300, 0.75);
     }
 
     &:hover &__btn {
