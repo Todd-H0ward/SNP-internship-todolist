@@ -3,8 +3,8 @@
 .checkbox {
     display: flex;
     flex: none;
-    width: 30px;
-    height: 30px;
+    width: $checkbox-size;
+    height: $checkbox-size;
     border-radius: 50%;
     border: 1px solid $black;
     cursor: pointer;
@@ -16,8 +16,8 @@
 
     &:checked {
         background: url("../icons/checkmark.svg") no-repeat;
-        height: 30px;
-        width: 30px;
+        width: $checkbox-size;
+        height: $checkbox-size;
         background-size: cover;
     }
 }

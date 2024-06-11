@@ -12,6 +12,12 @@
 
     &__title {
         word-break: break-all;
+        flex: 1 1 auto;
+        padding: 5px;
+        border-radius: 5px;
+        &--active {
+            @extend .active;
+        }
     }
 
     &__inner {
@@ -32,13 +38,6 @@
     &--finished {
         color: $gray-300;
         text-decoration: line-through;
-    }
-
-    &--active {
-        border: 3px solid $green-300;
-        -webkit-box-shadow: inset 3px 3px 10px 0 rgba($green-300, 0.75);
-        -moz-box-shadow: inset 3px 3px 10px 0 rgba($green-300, 0.75);
-        box-shadow: inset 3px 3px 10px 0 rgba($green-300, 0.75);
     }
 
     &:hover &__btn {

@@ -46,10 +46,10 @@ body {
     }
 
     &__arrow {
-        display: none;
+        display: block;
         position: absolute;
         top: 55%;
-        left: 10px;
+        left: clamp(0px, -0.596rem + 2.54vw, 10px);
         transform: translateY(-50%);
         z-index: 5;
         cursor: pointer;
