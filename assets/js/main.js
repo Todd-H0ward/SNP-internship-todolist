@@ -12,7 +12,7 @@ const todoList = new TodoList(".tasks-wrapper");
 
 const addTask = () => {
     if (input.value.length !== 0) {
-        const task = todoList.addTask(input.value);
+        const task = todoList.addTask({title: input.value});
         input.value = "";
         renderTask(task);
         updateTasksCount();
@@ -127,3 +127,10 @@ tasksWrapper.addEventListener("dblclick", handleTitleChange);
 tasksWrapper.addEventListener("touchend", handleTitleChange);
 arrowButton.addEventListener("click", handleToggleAll);
 clearButton.addEventListener("click", handleClearFinished);
+
+if (todoList.tasks.length !== 0) {
+    todoList.tasks.forEach(task => renderTask(task));
+    updateTasksCount();
+}
+
+render("all");

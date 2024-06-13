@@ -3,16 +3,35 @@ import {Task} from "./task.js";
 export class TodoList {
     constructor() {
         this.tasks = [];
+        this.loadTasks();
     }
 
-    addTask(title) {
-        const task = new Task(title);
+    loadTasks() {
+        const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+        if (!savedTasks) return;
+        savedTasks.forEach(task => {
+            this.addTask({
+                id: task.id,
+                title: task.title,
+                isActive: task.isActive
+            });
+        });
+    }
+
+    saveTasks() {
+        localStorage.setItem("tasks", JSON.stringify(this.tasks));
+    }
+
+    addTask({id, title, isActive}) {
+        const task = new Task({id, title, isActive});
         this.tasks.push(task);
+        this.saveTasks();
         return task;
     }
 
     removeTask(taskId) {
         this.tasks = this.tasks.filter(task => task.id !== taskId);
+        this.saveTasks();
     }
 
     findTask(taskId) {
@@ -22,16 +41,19 @@ export class TodoList {
     toggleActive(taskId) {
         const task = this.findTask(taskId);
         task.toggleActive();
+        this.saveTasks();
     }
 
     changeTitle(taskId, newTitle) {
         const task = this.findTask(taskId);
         task.changeTitle(newTitle);
+        this.saveTasks();
     }
 
     clearFinished() {
         const tasksToDelete = this.tasks.filter(task => !task.isActive);
         this.tasks = this.tasks.filter(task => task.isActive);
+        this.saveTasks();
         return tasksToDelete;
     }
 
@@ -40,6 +62,7 @@ export class TodoList {
         this.tasks.forEach(task => {
             task.isActive = !isAllActive;
         });
+        this.saveTasks();
     }
 
     getActiveTasksCount() {
