@@ -227,6 +227,7 @@ meter {
   opacity: 0;
   display: flex;
   align-items: center;
+  flex: none;
   cursor: pointer;
   transition: opacity 0.2s;
 }

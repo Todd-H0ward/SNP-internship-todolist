@@ -67,13 +67,13 @@ const handleTitleChange = (event) => {
     const taskId = Number(elem.closest(".task").dataset.id);
     if (!elem.classList.contains("title")) return;
 
-    elem.removeAttribute("readonly");
+    elem.setAttribute("contenteditable", "true");
     elem.classList.add("task__title--active");
     elem.focus();
     elem.addEventListener("focusout", () => {
-        elem.readOnly = "true";
+        elem.removeAttribute("contendEditable");
         elem.classList.remove("task__title--active");
-        todoList.changeTitle(taskId, elem.value);
+        todoList.changeTitle(taskId, elem.textContent);
     })
 }
 
@@ -96,7 +96,7 @@ const renderTask = (task) => {
     taskElem.innerHTML = `
             <input class="task__checkbox checkbox" type="checkbox" ${task.isActive ? "" : "checked"}>
             <div class="task__inner">
-                <input class="task__title title" value="${task.title}" spellcheck readonly>
+                <span class="task__title title" spellcheck="true">${task.title}</span>
                 <button class="task__btn">
                     <img class="delete" src="assets/icons/cross.svg" alt="delete icon">
                 </button>
