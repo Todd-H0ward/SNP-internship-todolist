@@ -129,8 +129,8 @@ arrowButton.addEventListener("click", handleToggleAll);
 clearButton.addEventListener("click", handleClearFinished);
 
 if (todoList.tasks.length !== 0) {
-    todoList.tasks.forEach(task => renderTask(task));
+    const activeButton = document.querySelector(`[data-filter="${todoList.filter}"]`);
+    activeButton.classList.add("button--active");
+    render(todoList.filter);
     updateTasksCount();
 }
-
-render("all");

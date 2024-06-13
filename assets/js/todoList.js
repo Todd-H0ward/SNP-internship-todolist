@@ -3,13 +3,15 @@ import {Task} from "./task.js";
 export class TodoList {
     constructor() {
         this.tasks = [];
+        this.filter = "all";
         this.loadTasks();
     }
 
     loadTasks() {
         const savedTasks = JSON.parse(localStorage.getItem("tasks"));
         if (!savedTasks) return;
-        savedTasks.forEach(task => {
+        this.filter = savedTasks.filter;
+        savedTasks.tasks.forEach(task => {
             this.addTask({
                 id: task.id,
                 title: task.title,
@@ -19,7 +21,11 @@ export class TodoList {
     }
 
     saveTasks() {
-        localStorage.setItem("tasks", JSON.stringify(this.tasks));
+        const saveData = {
+            filter: this.filter,
+            tasks: this.tasks
+        }
+        localStorage.setItem("tasks", JSON.stringify(saveData));
     }
 
     addTask({id, title, isActive}) {
@@ -70,6 +76,8 @@ export class TodoList {
     }
 
     getFilteredTasks(filter) {
+        this.filter = filter;
+        this.saveTasks();
         if (filter === "active") {
             return this.tasks.filter(task => task.isActive);
         } else if (filter === "completed") {
