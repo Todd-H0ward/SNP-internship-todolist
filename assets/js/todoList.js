@@ -42,6 +42,10 @@ export class TodoList {
         });
     }
 
+    getActiveTasksCount() {
+        return this.tasks.filter(task => task.isActive).length;
+    }
+
     getFilteredTasks(filter) {
         if (filter === "active") {
             return this.tasks.filter(task => task.isActive);

@@ -3,7 +3,7 @@ import {TodoList} from "./todoList.js";
 const input = document.querySelector(".input");
 const controls = document.querySelector(".controls");
 const tasksWrapper = document.querySelector(".tasks-wrapper");
-const controlsNumber = document.querySelector(".controls__number");
+const controlsNumber = document.querySelector(".number");
 const filterButtons = document.querySelectorAll(".todos__btn");
 const arrowButton = document.querySelector(".arrow-btn");
 const clearButton = document.querySelector(".clear");
@@ -20,10 +20,12 @@ const addTask = () => {
 };
 
 const updateTasksCount = () => {
-    const tasksCount = tasksWrapper.querySelectorAll(".task").length;
-    controlsNumber.textContent = String(tasksCount);
-    controls.style.display = tasksCount === 0 ? "none" : "flex";
+    const tasksCount = todoList.tasks.length;
+    const activeTasksCount = todoList.getActiveTasksCount();
+    controlsNumber.textContent = activeTasksCount;
+    controls.style.display = tasksCount === 0 ? "none" : "grid";
     arrowButton.style.display = tasksCount === 0 ? "none" : "block";
+    clearButton.classList.toggle("hidden", activeTasksCount === tasksCount);
 };
 
 const updateTaskElement = (taskId) => {
@@ -31,6 +33,7 @@ const updateTaskElement = (taskId) => {
     const taskData = todoList.findTask(taskId);
     taskElem.className = `task ${taskData.isActive ? "" : "task--finished"}`;
     taskElem.querySelector(".checkbox").checked = !taskData.isActive;
+    updateTasksCount();
 }
 
 const handleTaskDelete = (taskId) => {
@@ -93,7 +96,7 @@ const renderTask = (task) => {
     taskElem.innerHTML = `
             <input class="task__checkbox checkbox" type="checkbox" ${task.isActive ? "" : "checked"}>
             <div class="task__inner">
-                <input class="task__title title" value="${task.title}" readonly>
+                <input class="task__title title" value="${task.title}" spellcheck readonly>
                 <button class="task__btn">
                     <img class="delete" src="assets/icons/cross.svg" alt="delete icon">
                 </button>
@@ -105,8 +108,6 @@ const renderTask = (task) => {
 const clearActiveButton = () => {
     filterButtons.forEach(btn => btn.classList.remove("button--active"));
 };
-
-// Event Listeners
 
 filterButtons.forEach(btn => btn.addEventListener("click", () => {
     clearActiveButton();
