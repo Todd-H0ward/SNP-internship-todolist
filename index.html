@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="assets/scss/main.css">
 </head>
 <body>
-
     <div class="wrapper">
         <div class="todos">
             <div class="todos__container container">
@@ -19,13 +18,12 @@
                             <img class="todos__arrow-image" src="assets/icons/arrow-down.svg" alt="arrow down">
                         </button>
                     </div>
-                    
 
                     <div class="todos__tasks tasks-wrapper"></div>
 
                     <div class="todos__controls controls">
-                        <p class="controls__text">
-                            <span class="controls__number"></span> items left
+                        <p class="todos__controls-text">
+                            <span class="todos__controls-number number"></span> items left
                         </p>
                         <div class="todos__filters filter">
                             <button class="todos__btn button button--active" data-filter="all">All</button>
@@ -35,10 +33,12 @@
                         <button class="todos__clear clear">Clear completed</button>
                     </div>
                 </div>
+                <p class="todos__hint">Double-click to edit a todo</p>
             </div>
         </div>
     </div>
 
+    <script src="assets/js/task.js" type="module" defer></script>
     <script src="assets/js/todoList.js" type="module" defer></script>
     <script src="assets/js/main.js" type="module" defer></script>
 </body>
