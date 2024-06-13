@@ -12,12 +12,29 @@ const todoList = new TodoList(".tasks-wrapper");
 
 const addTask = () => {
     if (input.value.length !== 0) {
-        const task = todoList.addTask(input.value);
+        const task = todoList.addTask({title: input.value});
         input.value = "";
-        renderTask(task);
+        console.log(task, todoList.filter);
+        if (satisfyFilter(task, todoList.filter)) {
+            renderTask(task);
+        }
         updateTasksCount();
     }
 };
+
+const satisfyFilter = (task, filter) => {
+    switch (filter) {
+        case "all":
+            return true;
+        case "active":
+            return task.isActive;
+        case "completed":
+            return !task.isActive;
+        default:
+            return true;
+    }
+};
+
 
 const updateTasksCount = () => {
     const tasksCount = todoList.tasks.length;
@@ -31,8 +48,14 @@ const updateTasksCount = () => {
 const updateTaskElement = (taskId) => {
     const taskElem = tasksWrapper.querySelector(`[data-id="${taskId}"]`);
     const taskData = todoList.findTask(taskId);
-    taskElem.className = `task ${taskData.isActive ? "" : "task--finished"}`;
-    taskElem.querySelector(".checkbox").checked = !taskData.isActive;
+
+    if (satisfyFilter(taskId, todoList.filter)) {
+        taskElem.className = `task ${taskData.isActive ? "" : "task--finished"}`;
+        taskElem.querySelector(".checkbox").checked = !taskData.isActive;
+    } else {
+        taskElem.remove()
+    }
+
     updateTasksCount();
 }
 
@@ -40,6 +63,15 @@ const handleTaskDelete = (taskId) => {
     todoList.removeTask(taskId);
     tasksWrapper.querySelector(`[data-id="${taskId}"]`).remove();
     updateTasksCount();
+}
+
+const makeOutline = (task, elem) => {
+    task.classList.add("task--active");
+    window.addEventListener("click", (event) => {
+        if (!elem.contains(event.target)) {
+            task.classList.remove("task--active");
+        }
+    });
 }
 
 const handleTaskAction = event => {
@@ -51,6 +83,7 @@ const handleTaskAction = event => {
     if (elem.classList.contains("checkbox")) {
         todoList.toggleActive(taskId);
         updateTaskElement(taskId);
+        makeOutline(task, elem);
     } else if (elem.classList.contains("delete")) {
         handleTaskDelete(taskId);
     }
@@ -67,13 +100,13 @@ const handleTitleChange = (event) => {
     const taskId = Number(elem.closest(".task").dataset.id);
     if (!elem.classList.contains("title")) return;
 
-    elem.removeAttribute("readonly");
+    elem.setAttribute("contenteditable", "true");
     elem.classList.add("task__title--active");
     elem.focus();
     elem.addEventListener("focusout", () => {
-        elem.readOnly = "true";
+        elem.removeAttribute("contendEditable");
         elem.classList.remove("task__title--active");
-        todoList.changeTitle(taskId, elem.value);
+        todoList.changeTitle(taskId, elem.textContent);
     })
 }
 
@@ -96,7 +129,7 @@ const renderTask = (task) => {
     taskElem.innerHTML = `
             <input class="task__checkbox checkbox" type="checkbox" ${task.isActive ? "" : "checked"}>
             <div class="task__inner">
-                <input class="task__title title" value="${task.title}" spellcheck readonly>
+                <span class="task__title title" spellcheck="true">${task.title}</span>
                 <button class="task__btn">
                     <img class="delete" src="assets/icons/cross.svg" alt="delete icon">
                 </button>
@@ -127,3 +160,10 @@ tasksWrapper.addEventListener("dblclick", handleTitleChange);
 tasksWrapper.addEventListener("touchend", handleTitleChange);
 arrowButton.addEventListener("click", handleToggleAll);
 clearButton.addEventListener("click", handleClearFinished);
+
+if (todoList.tasks.length !== 0) {
+    const activeButton = document.querySelector(`[data-filter="${todoList.filter}"]`);
+    activeButton.classList.add("button--active");
+    render(todoList.filter);
+    updateTasksCount();
+}

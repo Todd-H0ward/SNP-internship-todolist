@@ -1,8 +1,8 @@
 export class Task {
-    constructor(title) {
-        this.id = Date.now();
+    constructor({id, title, isActive}) {
+        this.id = id ?? Date.now();
         this.title = title;
-        this.isActive = true;
+        this.isActive = isActive ?? true;
     }
 
     toggleActive() {
