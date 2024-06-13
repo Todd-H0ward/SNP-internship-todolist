@@ -18,7 +18,7 @@ body {
 .container {
     max-width: 660px;
     width: 100%;
-    padding: 0 clamp(15px, 3vw, 30px);
+    padding: 0 clamp(10px, 3vw, 30px);
     margin: 0 auto;
 }
 
@@ -28,6 +28,7 @@ body {
     &__inner {
         display: flex;
         flex-direction: column;
+        margin-bottom: 40px;
     }
 
     &__title {
@@ -45,10 +46,10 @@ body {
     }
 
     &__arrow {
-        display: none;
+        display: block;
         position: absolute;
         top: 55%;
-        left: 10px;
+        left: clamp(0px, -0.596rem + 2.54vw, 10px);
         transform: translateY(-50%);
         z-index: 5;
         cursor: pointer;
@@ -60,37 +61,64 @@ body {
     }
 
     &__controls {
+        @extend .p-small;
         display: none;
+        grid-template-columns: repeat(3, 1fr);
+        border-radius: $border-radius;
         background: $white;
         color: $black;
-        padding: 5px 10px;
+        padding: 8px 10px;
         position: relative;
         justify-content: space-between;
         align-items: center;
+        &-text {
+            font-weight: bold;
+        }
+    }
+
+    &__text {
+        flex: none;
     }
 
     &__filters {
         display: flex;
+        flex: none;
         gap: 7px;
+    }
+
+    &__hint {
+        @extend .p-small;
+        text-align: center;
     }
 
     &__clear {
         position: relative;
         cursor: pointer;
-        &::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 0;
-            height: 1px;
-            margin: 0 auto;
-            background: $black;
-            transition: width .3s;
+        opacity: 1;
+        text-align: right;
+        transition: opacity 200ms ease, color .3s;
+        &:hover {
+            color: rgba($black, .6);
         }
-        &:hover::after {
-            width: 100%;
+    }
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 425px) {
+    .todos {
+        &__controls {
+            grid-template-columns: repeat(2, 1fr);
+            grid-row-gap: 5px;
+            grid-template-rows: repeat(2, 1fr);
+        }
+        &__filters {
+            grid-row: 2;
+            grid-column: span 2;
+            justify-content: center;
         }
     }
 }
