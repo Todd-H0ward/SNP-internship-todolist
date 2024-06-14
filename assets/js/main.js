@@ -14,7 +14,6 @@ const addTask = () => {
     if (input.value.length !== 0) {
         const task = todoList.addTask({title: input.value});
         input.value = "";
-        console.log(task, todoList.filter);
         if (satisfyFilter(task, todoList.filter)) {
             renderTask(task);
         }
@@ -49,7 +48,7 @@ const updateTaskElement = (taskId) => {
     const taskElem = tasksWrapper.querySelector(`[data-id="${taskId}"]`);
     const taskData = todoList.findTask(taskId);
 
-    if (satisfyFilter(taskId, todoList.filter)) {
+    if (satisfyFilter(taskData, todoList.filter)) {
         taskElem.className = `task ${taskData.isActive ? "" : "task--finished"}`;
         taskElem.querySelector(".checkbox").checked = !taskData.isActive;
     } else {
@@ -95,19 +94,24 @@ const handleClearFinished = () => {
     updateTasksCount();
 }
 
+const makeTitleEditable = (elem, taskId) => {
+    elem.setAttribute("contenteditable", "true");
+    elem.setAttribute("spellcheck", "true");
+    elem.classList.add("task__title--active");
+    elem.focus();
+    elem.addEventListener("focusout", () => {
+        elem.setAttribute("contenteditable", "false");
+        elem.setAttribute("spellcheck", "false");
+        elem.classList.remove("task__title--active");
+        todoList.changeTitle(taskId, elem.textContent);
+    })
+}
+
 const handleTitleChange = (event) => {
     const elem = event.target;
     const taskId = Number(elem.closest(".task").dataset.id);
     if (!elem.classList.contains("title")) return;
-
-    elem.setAttribute("contenteditable", "true");
-    elem.classList.add("task__title--active");
-    elem.focus();
-    elem.addEventListener("focusout", () => {
-        elem.removeAttribute("contendEditable");
-        elem.classList.remove("task__title--active");
-        todoList.changeTitle(taskId, elem.textContent);
-    })
+    makeTitleEditable(elem, taskId);
 }
 
 const handleToggleAll = () => {
@@ -129,7 +133,7 @@ const renderTask = (task) => {
     taskElem.innerHTML = `
             <input class="task__checkbox checkbox" type="checkbox" ${task.isActive ? "" : "checked"}>
             <div class="task__inner">
-                <span class="task__title title" spellcheck="true">${task.title}</span>
+                <span class="task__title title">${task.title}</span>
                 <button class="task__btn">
                     <img class="delete" src="assets/icons/cross.svg" alt="delete icon">
                 </button>

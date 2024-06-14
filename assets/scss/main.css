@@ -137,7 +137,7 @@ meter {
 /* Colors */
 /* Colors */
 .active, .task__title--active, .task--active, .input:focus {
-  box-shadow: inset 0 0 3px 2px #3B7E7B;
+  box-shadow: inset 0 0 1px 2px #3B7E7B;
 }
 
 /* Colors */
