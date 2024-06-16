@@ -320,6 +320,7 @@ body {
   text-align: center;
 }
 .todos__clear {
+  display: inline;
   position: relative;
   cursor: pointer;
   opacity: 1;
