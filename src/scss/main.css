@@ -143,19 +143,19 @@ meter {
 /* Colors */
 .button {
   padding: 1px 7px;
-  border-radius: 5px;
   color: #1B1F2B;
+  border-radius: 5px;
   outline: 1px solid #1B1F2B;
   cursor: pointer;
   transition: background 0.4s, color 0.2s;
 }
 .button:hover {
-  background: rgba(27, 31, 43, 0.7);
   color: #FFF;
+  background: rgba(27, 31, 43, 0.7);
 }
 .button:active {
-  background: #1B1F2B;
   color: #FFF;
+  background: #1B1F2B;
 }
 .button--active {
   outline: 3px solid #286562;
@@ -170,8 +170,8 @@ meter {
   flex: none;
   width: clamp(24px, 1.142rem + 1.53vw, 30px);
   height: clamp(24px, 1.142rem + 1.53vw, 30px);
-  border-radius: 50%;
   border: 1px solid #1B1F2B;
+  border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -179,42 +179,42 @@ meter {
   background: rgba(166, 166, 166, 0.4);
 }
 .checkbox:checked {
-  background: url("../icons/checkmark.svg") no-repeat;
   width: clamp(24px, 1.142rem + 1.53vw, 30px);
   height: clamp(24px, 1.142rem + 1.53vw, 30px);
+  background: url("../icons/checkmark.svg") no-repeat;
   background-size: cover;
 }
 
 /* Colors */
 .input {
+  position: relative;
   padding: clamp(7px, 2.5vw, 15px) clamp(10px, 2.5vw, 20px) clamp(7px, 2.5vw, 15px) clamp(45px, 1.322rem + 6.36vw, 70px);
+  color: #1B1F2B;
+  background: #FFF;
   border: 1px solid #A6A6A6;
   border-radius: 10px;
-  background: #FFF;
-  transition: all 0.3s;
-  color: #1B1F2B;
-  position: relative;
   box-shadow: rgba(255, 255, 255, 0.1) 0 0 10px 3px;
+  transition: all 0.3s;
 }
 .input::placeholder {
-  color: #A6A6A6;
   font-style: italic;
+  color: #A6A6A6;
 }
 /* Colors */
 .task {
-  color: #1B1F2B;
-  padding: clamp(7px, 2.5vw, 15px) clamp(10px, 2.5vw, 20px);
-  background: #FFF;
   display: flex;
   align-items: center;
   gap: clamp(5px, -0.229rem + 2.31vw, 20px);
+  padding: clamp(7px, 2.5vw, 15px) clamp(10px, 2.5vw, 20px);
+  color: #1B1F2B;
+  background: #FFF;
   border-bottom: 1px solid #A6A6A6;
   transition: all 0.2s;
 }
 .task__title {
-  word-break: break-all;
   flex: 1 1 auto;
   padding: 5px;
+  word-break: break-all;
   border-radius: 5px;
 }
 .task__inner {
@@ -224,16 +224,16 @@ meter {
   align-items: center;
 }
 .task__btn {
-  opacity: 0;
+  flex: none;
   display: flex;
   align-items: center;
-  flex: none;
+  opacity: 0;
   cursor: pointer;
   transition: opacity 0.2s;
 }
 .task--finished {
-  color: #A6A6A6;
   text-decoration: line-through;
+  color: #A6A6A6;
 }
 .task:hover .task__btn {
   opacity: 1;
@@ -247,8 +247,8 @@ meter {
 /* Colors */
 body {
   font-family: Roboto, sans-serif;
-  color: #FFF;
   font-style: normal;
+  color: #FFF;
   background: #1B1F2B;
 }
 
@@ -282,12 +282,12 @@ body {
   width: 100%;
 }
 .todos__arrow {
-  display: block;
   position: absolute;
   top: 55%;
   left: clamp(0px, -0.596rem + 2.54vw, 10px);
-  transform: translateY(-50%);
   z-index: 5;
+  display: block;
+  transform: translateY(-50%);
   cursor: pointer;
 }
 .todos__tasks {
@@ -295,15 +295,15 @@ body {
   overflow: hidden;
 }
 .todos__controls {
+  position: relative;
   display: none;
   grid-template-columns: repeat(3, 1fr);
-  border-radius: 10px;
-  background: #FFF;
-  color: #1B1F2B;
-  padding: 8px 10px;
-  position: relative;
   justify-content: space-between;
   align-items: center;
+  padding: 8px 10px;
+  color: #1B1F2B;
+  background: #FFF;
+  border-radius: 10px;
 }
 .todos__controls-text {
   font-weight: bold;
@@ -321,9 +321,9 @@ body {
 }
 .todos__clear {
   position: relative;
+  text-align: right;
   cursor: pointer;
   opacity: 1;
-  text-align: right;
   transition: opacity 200ms ease, color 0.3s;
 }
 .todos__clear:hover {
