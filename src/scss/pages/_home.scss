@@ -1,10 +1,11 @@
 @import "../utils/variables";
 
 body {
-    @extend .p-normal;
     font-family: Roboto, sans-serif;
-    color: $white;
     font-style: normal;
+    @extend .p-normal;
+
+    color: $white;
     background: $black;
 }
 
@@ -12,6 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
     overflow: hidden;
 }
 
@@ -32,8 +34,9 @@ body {
     }
 
     &__title {
-        @extend .h1;
         padding: 10px 0;
+
+        @extend .h1;
         text-align: center;
     }
 
@@ -46,12 +49,14 @@ body {
     }
 
     &__arrow {
-        display: block;
         position: absolute;
         top: 55%;
         left: clamp(0px, -0.596rem + 2.54vw, 10px);
-        transform: translateY(-50%);
         z-index: 5;
+
+        display: block;
+
+        transform: translateY(-50%);
         cursor: pointer;
     }
 
@@ -61,16 +66,20 @@ body {
     }
 
     &__controls {
-        @extend .p-small;
+        position: relative;
+
         display: none;
         grid-template-columns: repeat(3, 1fr);
-        border-radius: $border-radius;
-        background: $white;
-        color: $black;
-        padding: 8px 10px;
-        position: relative;
         justify-content: space-between;
         align-items: center;
+        padding: 8px 10px;
+
+        @extend .p-small;
+
+        color: $black;
+        background: $white;
+        border-radius: $border-radius;
+
         &-text {
             font-weight: bold;
         }
@@ -93,10 +102,13 @@ body {
 
     &__clear {
         position: relative;
+
+        text-align: right;
         cursor: pointer;
         opacity: 1;
-        text-align: right;
+
         transition: opacity 200ms ease, color .3s;
+
         &:hover {
             color: rgba($black, .6);
         }

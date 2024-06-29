@@ -1,23 +1,28 @@
 @import "../utils/variables";
 
 .task {
-    color: $black;
-    padding: $field-padding-vertical $field-padding-horizontal;
-    background: $white;
     display: flex;
     align-items: center;
     gap: clamp(5px, -0.229rem + 2.31vw, 20px);
+    padding: $field-padding-vertical $field-padding-horizontal;
+
+    color: $black;
+    background: $white;
     border-bottom: 1px solid $gray-300;
+
     transition: all .2s;
+
     &--active {
         @extend .active;
     }
 
     &__title {
-        word-break: break-all;
         flex: 1 1 auto;
         padding: 5px;
+
+        word-break: break-all;
         border-radius: 5px;
+
         &--active {
             @extend .active;
         }
@@ -31,17 +36,19 @@
     }
 
     &__btn {
-        opacity: 0;
+        flex: none;
         display: flex;
         align-items: center;
-        flex: none;
+
+        opacity: 0;
         cursor: pointer;
+
         transition: opacity .2s;
     }
 
     &--finished {
-        color: $gray-300;
         text-decoration: line-through;
+        color: $gray-300;
     }
 
     &:hover &__btn {

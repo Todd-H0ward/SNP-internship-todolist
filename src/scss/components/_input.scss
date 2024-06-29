@@ -1,19 +1,23 @@
 @import "../utils/variables";
 
 .input {
-    @extend .p-normal;
+    position: relative;
+
     padding: $field-padding-vertical $field-padding-horizontal $field-padding-vertical $input-indent;
+
+    @extend .p-normal;
+
+    color: $black;
+    background: $white;
     border: 1px solid $gray-300;
     border-radius: $border-radius;
-    background: $white;
-    transition: all .3s;
-    color: $black;
-    position: relative;
     box-shadow: rgba($white, 0.1) 0 0 10px 3px;
 
+    transition: all .3s;
+
     &::placeholder {
-        color: $gray-300;
         font-style: italic;
+        color: $gray-300;
     }
 
     &:focus {
