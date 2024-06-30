@@ -33,6 +33,7 @@ arrowButton.addEventListener("click", handleToggleAll);
 clearButton.addEventListener("click", handleClearFinished);
 
 if (todoList.tasks.length !== 0) {
+    clearActiveButton();
     document.querySelector(`[data-filter="${todoList.filter}"]`).classList.add("button--active");
     render(todoList.filter);
     updateTasksCount();
