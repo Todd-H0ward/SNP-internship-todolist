@@ -1,13 +1,13 @@
 import "./../scss/main.scss";
-import { clearActiveButton, render, updateTasksCount } from "./domUtils";
+import {clearActiveButton, render, updateTasksCount} from "./domUtils";
 import {
-	addTask,
-	handleClearFinished,
-	handleTaskAction,
-	handleTitleChange,
-	handleToggleAll,
+    addTask,
+    handleClearFinished,
+    handleTaskAction,
+    handleTitleChange,
+    handleToggleAll,
 } from "./handlers";
-import { TodoList } from "./todoList.js";
+import {TodoList} from "./todoList.js";
 
 export const input = document.querySelector(".input");
 export const controls = document.querySelector(".controls");
@@ -20,19 +20,19 @@ export const clearButton = document.querySelector(".clear");
 export const todoList = new TodoList(".tasks-wrapper");
 
 filterButtons.forEach(btn =>
-	btn.addEventListener("click", () => {
-		clearActiveButton();
-		btn.classList.add("button--active");
-		render(btn.dataset.filter);
-		updateTasksCount();
-	})
+    btn.addEventListener("click", () => {
+        clearActiveButton();
+        btn.classList.add("button--active");
+        render(btn.dataset.filter);
+        updateTasksCount();
+    })
 );
 
 input.addEventListener("focusout", addTask);
 input.addEventListener("keydown", event => {
-	if (event.key === "Enter") {
-		addTask();
-	}
+    if (event.key === "Enter") {
+        addTask();
+    }
 });
 
 tasksWrapper.addEventListener("click", handleTaskAction);
@@ -42,10 +42,10 @@ arrowButton.addEventListener("click", handleToggleAll);
 clearButton.addEventListener("click", handleClearFinished);
 
 if (todoList.tasks.length !== 0) {
-	clearActiveButton();
-	document
-		.querySelector(`[data-filter="${todoList.filter}"]`)
-		.classList.add("button--active");
-	render(todoList.filter);
-	updateTasksCount();
+    clearActiveButton();
+    document
+        .querySelector(`[data-filter="${todoList.filter}"]`)
+        .classList.add("button--active");
+    render(todoList.filter);
+    updateTasksCount();
 }
