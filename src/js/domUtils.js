@@ -23,7 +23,8 @@ export const updateTaskElement = taskId => {
     const taskData = todoList.findTask(taskId);
 
     if (satisfyFilter(taskData, todoList.filter)) {
-        taskElem.className = `task ${taskData.isActive ? "" : "task--finished"}`;
+        taskElem.className = "task";
+        updateTaskClasses(taskId, taskData.isActive);
         taskElem.querySelector(".checkbox").checked = !taskData.isActive;
     } else {
         taskElem.remove();
@@ -34,7 +35,7 @@ export const updateTaskElement = taskId => {
 
 export const renderTask = task => {
     const taskElem = document.createElement("div");
-    taskElem.className = `task ${task.isActive ? "" : "task--finished"}`;
+    taskElem.className = "task";
     taskElem.dataset.id = task.id;
 
     taskElem.innerHTML = `
@@ -46,7 +47,9 @@ export const renderTask = task => {
             </button>
         </div>
     `;
+
     tasksWrapper.appendChild(taskElem);
+    updateTaskClasses(task.id, task.isActive);
 };
 
 export const render = filter => {
@@ -62,4 +65,9 @@ export const clearActiveButton = () => {
 export const removeTaskElement = taskId => {
     getTaskById(taskId)?.remove();
     updateTasksCount();
+};
+
+export const updateTaskClasses = (taskId, isActive) => {
+    const taskElem = getTaskById(taskId);
+    taskElem.classList.toggle("task--finished", !isActive);
 };
