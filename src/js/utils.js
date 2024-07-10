@@ -27,6 +27,13 @@ export const makeOutline = (task, elem) => {
     });
 };
 
+export const makeSelection = (elem) => {
+    elem.setAttribute("contenteditable", "true");
+    elem.setAttribute("spellcheck", "true");
+    elem.classList.add("task__title--active");
+    elem.focus();
+}
+
 export const clearSelection = elem => {
     elem.setAttribute("contenteditable", "false");
     elem.setAttribute("spellcheck", "false");

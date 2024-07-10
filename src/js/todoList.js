@@ -12,11 +12,7 @@ export class TodoList {
         if (!savedTasks) return;
         this.filter = savedTasks.filter;
         savedTasks.tasks.forEach(task => {
-            this.addTask({
-                id: task.id,
-                title: task.title,
-                isActive: task.isActive,
-            });
+            this.addTask(task);
         });
     }
 
@@ -65,9 +61,7 @@ export class TodoList {
 
     toggleAllActive() {
         const isAllActive = this.tasks.some(task => task.isActive);
-        this.tasks.forEach(task => {
-            task.isActive = !isAllActive;
-        });
+        this.tasks.forEach(task => task.isActive = !isAllActive);
         this.saveTasks();
     }
 
