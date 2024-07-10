@@ -5,8 +5,13 @@ import {
     updateTaskElement,
     updateTasksCount,
 } from "./domUtils";
+import {
+    clearSelection,
+    makeOutline,
+    makeSelection,
+    satisfyFilter
+} from "./utils";
 import {input, todoList} from "./main";
-import {clearSelection, makeOutline, makeSelection, satisfyFilter} from "./utils";
 
 export const addTask = () => {
     const inputValue = input.value.trim();
