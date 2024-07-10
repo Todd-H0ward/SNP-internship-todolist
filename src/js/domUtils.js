@@ -63,3 +63,8 @@ export const removeTaskElement = taskId => {
     getTaskById(taskId)?.remove();
     updateTasksCount();
 };
+
+export const updateTaskClasses = (taskId, isActive) => {
+    const taskElem = getTaskById(taskId);
+    taskElem.classList.toggle("task--finished", !isActive);
+};

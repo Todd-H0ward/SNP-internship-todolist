@@ -1,5 +1,9 @@
 import "./../scss/main.scss";
-import {clearActiveButton, render, updateTasksCount} from "./domUtils";
+import {
+    clearActiveButton,
+    render,
+    updateTasksCount
+} from "./domUtils";
 import {
     addTask,
     handleClearFinished,
@@ -30,9 +34,7 @@ filterButtons.forEach(btn =>
 
 input.addEventListener("focusout", addTask);
 input.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-        addTask();
-    }
+    if (event.key === "Enter") addTask();
 });
 
 tasksWrapper.addEventListener("click", handleTaskAction);
