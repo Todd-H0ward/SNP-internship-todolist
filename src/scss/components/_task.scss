@@ -5,12 +5,10 @@
     align-items: center;
     gap: clamp(5px, -0.229rem + 2.31vw, 20px);
     padding: $field-padding-vertical $field-padding-horizontal;
-
     color: $black;
     background: $white;
     border-bottom: 1px solid $gray-300;
-
-    transition: all .2s;
+    transition: all 0.2s;
 
     &--active {
         @extend .active;
@@ -19,7 +17,6 @@
     &__title {
         flex: 1 1 auto;
         padding: 5px;
-
         word-break: break-all;
         border-radius: 5px;
 
@@ -39,11 +36,9 @@
         flex: none;
         display: flex;
         align-items: center;
-
         opacity: 0;
         cursor: pointer;
-
-        transition: opacity .2s;
+        transition: opacity 0.2s;
     }
 
     &--finished {

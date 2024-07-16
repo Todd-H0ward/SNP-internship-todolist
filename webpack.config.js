@@ -8,41 +8,35 @@ module.exports = {
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist"),
-        clean: true
+        clean: true,
     },
 
     module: {
         rules: [
             {
                 test: /\.scss$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    "sass-loader"
-                ]
-            }
-        ]
+                use: ["style-loader", "css-loader", "sass-loader"],
+            },
+        ],
     },
 
     plugins: [
         new HtmlWebpackPlugin({
             template: "./src/index.html",
-            favicon: "./src/icons/favicon.svg"
+            favicon: "./src/icons/favicon.svg",
         }),
         new CopyPlugin({
-            patterns: [
-                { from: "src/icons", to: "icons" },
-            ],
+            patterns: [{ from: "src/icons", to: "icons" }],
         }),
     ],
 
     devServer: {
         static: {
-            directory: path.join(__dirname, "dist")
+            directory: path.join(__dirname, "dist"),
         },
         open: true,
         port: 9001,
     },
 
-    mode: 'development',
-}
+    mode: "development",
+};

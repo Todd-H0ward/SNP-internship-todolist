@@ -1,7 +1,8 @@
 import {
     removeTaskElement,
     render,
-    renderTask, updateTaskClasses,
+    renderTask,
+    updateTaskClasses,
     updateTaskElement,
     updateTasksCount,
 } from "./domUtils";
@@ -9,50 +10,63 @@ import {
     clearSelection,
     makeOutline,
     makeSelection,
-    satisfyFilter
+    satisfyFilter,
 } from "./utils";
-import {input, todoList} from "./main";
+import { filter, input, saveTasks, setTasks, tasks } from "./main";
 
 export const addTask = () => {
     const inputValue = input.value.trim();
     if (inputValue) {
-        const task = todoList.addTask({title: inputValue});
+        const task = {
+            id: Date.now(),
+            title: inputValue,
+            isActive: true,
+        };
+        tasks.push(task);
         input.value = "";
-        if (satisfyFilter(task, todoList.filter)) renderTask(task);
+        if (satisfyFilter(task, filter)) renderTask(task);
+        saveTasks();
         updateTasksCount();
     }
 };
 
-export const handleTaskDelete = taskId => {
-    todoList.removeTask(taskId);
+export const handleTaskDelete = (taskId) => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
+    saveTasks();
     removeTaskElement(taskId);
 };
 
-export const handleTaskAction = event => {
+export const handleTaskAction = (event) => {
     const elem = event.target;
     const task = elem.closest(".task");
     if (!task) return;
 
     const taskId = Number(task.dataset.id);
     if (elem.classList.contains("checkbox")) {
-        todoList.toggleActive(taskId);
+        const currentTask = tasks.find((task) => task.id === taskId);
+        currentTask.isActive = !currentTask.isActive;
         updateTaskElement(taskId);
         makeOutline(task, elem);
     } else if (elem.classList.contains("delete")) {
         handleTaskDelete(taskId);
     }
+
+    saveTasks();
 };
 
-export const makeTitleEditable = (elem, taskId) => {
-    makeSelection(elem);
+export const handleTitleChange = (event) => {
+    const elem = event.target;
+    if (!elem.classList.contains("title")) return;
+    const taskId = Number(elem.closest(".task").dataset.id);
     const titleCopy = elem.textContent;
-    const saveOnFocusOut = () => saveTaskTitle(elem, taskId);
-    const handleKeyDown = event => handleEditEvents(event, elem, titleCopy, taskId);
 
+    makeSelection(elem);
     updateTaskClasses(taskId, true);
 
-    elem.addEventListener("focusout", saveOnFocusOut);
-    elem.addEventListener("keydown", handleKeyDown);
+    elem.addEventListener("focusout", () => saveTaskTitle(elem, taskId));
+    elem.addEventListener("keydown", (event) =>
+        handleEditEvents(event, elem, titleCopy, taskId),
+    );
 };
 
 export const saveTaskTitle = (elem, taskId) => {
@@ -62,10 +76,11 @@ export const saveTaskTitle = (elem, taskId) => {
         handleTaskDelete(taskId);
     } else {
         elem.textContent = title;
-        todoList.changeTitle(taskId, title);
-        const task = todoList.findTask(taskId);
+        const task = tasks.find((task) => task.id === taskId);
+        task.title = title;
         updateTaskClasses(taskId, task.isActive);
     }
+    saveTasks();
 };
 
 const handleEditEvents = (event, elem, titleCopy, taskId) => {
@@ -78,19 +93,14 @@ const handleEditEvents = (event, elem, titleCopy, taskId) => {
 };
 
 export const handleClearFinished = () => {
-    const tasksToDelete = todoList.clearFinished();
-    tasksToDelete.forEach(task => removeTaskElement(task.id));
-};
-
-export const handleTitleChange = event => {
-    const elem = event.target;
-    if (!elem.classList.contains("title")) return;
-    const taskId = Number(elem.closest(".task").dataset.id);
-    makeTitleEditable(elem, taskId);
+    setTasks(tasks.filter((task) => task.isActive));
+    render(filter);
+    saveTasks();
 };
 
 export const handleToggleAll = () => {
-    todoList.toggleAllActive();
-    render(todoList.filter);
+    const isAllActive = tasks.some((task) => task.isActive);
+    tasks.forEach((task) => (task.isActive = !isAllActive));
+    render(filter);
     updateTasksCount();
 };
