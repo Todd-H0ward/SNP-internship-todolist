@@ -16,6 +16,7 @@ import {TodoList} from "./todoList.js";
 export const input = document.querySelector(".input");
 export const controls = document.querySelector(".controls");
 export const tasksWrapper = document.querySelector(".tasks-wrapper");
+export const appWrapper = document.querySelector(".todos__wrapper");
 export const controlsNumber = document.querySelector(".number");
 export const filterButtons = document.querySelectorAll(".todos__btn");
 export const arrowButton = document.querySelector(".arrow-btn");
@@ -32,7 +33,9 @@ filterButtons.forEach(btn =>
     })
 );
 
-input.addEventListener("focusout", addTask);
+window.addEventListener("click", event => {
+    if (!appWrapper.contains(event.target)) addTask();
+});
 input.addEventListener("keydown", event => {
     if (event.key === "Enter") addTask();
 });

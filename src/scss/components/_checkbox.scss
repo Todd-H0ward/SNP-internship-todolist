@@ -5,11 +5,9 @@
     flex: none;
     width: $checkbox-size;
     height: $checkbox-size;
-
     border: 1px solid $black;
     border-radius: 50%;
     cursor: pointer;
-
     transition: background .3s;
 
     &:hover {
@@ -19,7 +17,6 @@
     &:checked {
         width: $checkbox-size;
         height: $checkbox-size;
-        
         background: url("../icons/checkmark.svg") no-repeat;
         background-size: cover;
     }

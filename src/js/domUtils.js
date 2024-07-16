@@ -34,7 +34,7 @@ export const updateTaskElement = taskId => {
 };
 
 export const renderTask = task => {
-    const taskElem = document.createElement("div");
+    const taskElem = document.createElement("li");
     taskElem.className = "task";
     taskElem.dataset.id = task.id;
 

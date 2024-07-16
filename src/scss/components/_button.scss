@@ -2,12 +2,10 @@
 
 .button {
     padding: 1px 7px;
-
     color: $black;
     border-radius: 5px;
     outline: 1px solid $black;
     cursor: pointer;
-
     transition: background .4s, color .2s;
 
     &:hover {

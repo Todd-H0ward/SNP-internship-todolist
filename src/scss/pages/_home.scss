@@ -4,7 +4,6 @@ body {
     font-family: Roboto, sans-serif;
     font-style: normal;
     @extend .p-normal;
-
     color: $white;
     background: $black;
 }
@@ -13,7 +12,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-
     overflow: hidden;
 }
 
@@ -35,12 +33,11 @@ body {
 
     &__title {
         padding: 10px 0;
-
         @extend .h1;
         text-align: center;
     }
 
-    &__wrapper {
+    &__header {
         position: relative;
     }
 
@@ -53,9 +50,7 @@ body {
         top: 55%;
         left: clamp(0px, -0.596rem + 2.54vw, 10px);
         z-index: 5;
-
-        display: block;
-
+        display: none;
         transform: translateY(-50%);
         cursor: pointer;
     }
@@ -67,17 +62,15 @@ body {
 
     &__controls {
         position: relative;
-
         display: none;
         grid-template-columns: repeat(3, 1fr);
         justify-content: space-between;
         align-items: center;
         padding: 8px 10px;
-
         @extend .p-small;
-
         color: $black;
         background: $white;
+        border-bottom: 1px solid $gray-300;
         border-radius: $border-radius;
 
         &-text {
@@ -102,11 +95,9 @@ body {
 
     &__clear {
         position: relative;
-
         text-align: right;
         cursor: pointer;
         opacity: 1;
-
         transition: opacity 200ms ease, color .3s;
 
         &:hover {
