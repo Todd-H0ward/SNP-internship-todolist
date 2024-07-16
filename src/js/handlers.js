@@ -58,49 +58,40 @@ export const handleTitleChange = (event) => {
     const elem = event.target;
     if (!elem.classList.contains("title")) return;
     const taskId = Number(elem.closest(".task").dataset.id);
-    const titleCopy = elem.textContent;
+    const task = tasks.find((task) => task.id === taskId);
 
     makeSelection(elem);
-    updateTaskClasses(taskId, true);
+    updateTaskClasses(elem, true);
 
-    elem.addEventListener("focusout", () =>
-        saveTaskTitle(elem, taskId, titleCopy),
-    );
-    elem.addEventListener("keydown", (event) =>
-        handleEditEvents(event, elem, titleCopy, taskId),
-    );
+    elem.addEventListener("focusout", () => saveTaskTitle(elem, task));
+    elem.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            saveTaskTitle(elem, task);
+        } else if (event.key === "Escape") {
+            elem.textContent = task.title;
+            clearSelection(elem);
+        }
+    });
 };
 
-export const saveTaskTitle = (elem, taskId) => {
+export const saveTaskTitle = (elem, task) => {
+    const title = elem.textContent.trim();
     clearSelection(elem);
 
-    const titleCopy = elem.textContent;
-    const title = elem.textContent.trim();
-
     if (title.length === 0) {
-        elem.textContent = titleCopy;
+        elem.textContent = task.title;
     } else {
         elem.textContent = title;
-        const task = tasks.find((task) => task.id === taskId);
         task.title = title;
-        updateTaskClasses(taskId, task.isActive);
+        updateTaskClasses(elem, task.isActive);
     }
-    saveTasks();
-};
 
-const handleEditEvents = (event, elem, titleCopy, taskId) => {
-    if (event.key === "Enter") {
-        saveTaskTitle(elem, taskId);
-    } else if (event.key === "Escape") {
-        elem.textContent = titleCopy;
-        clearSelection(elem);
-    }
+    saveTasks();
 };
 
 export const handleClearFinished = () => {
     setTasks(tasks.filter((task) => task.isActive));
     render(filter);
-    saveTasks();
 };
 
 export const handleToggleAll = () => {

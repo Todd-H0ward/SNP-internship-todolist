@@ -17,12 +17,12 @@ export const clearButton = todosWrapper.querySelector(".clear");
 
 filterButtons.forEach((btn) =>
     btn.addEventListener("click", () => {
+        const filterValue = btn.dataset.filter;
         clearActiveButton();
         btn.classList.add("button--active");
-        render(btn.dataset.filter);
+        render(filterValue);
         updateTasksCount();
-        filter = btn.dataset.filter;
-        saveTasks();
+        filter = filterValue;
     }),
 );
 
@@ -51,9 +51,7 @@ const loadTasks = () => {
 
 export const saveTasks = () =>
     localStorage.setItem("tasks", JSON.stringify({ filter, tasks }));
-
 export let { filter, tasks } = loadTasks();
-
 export const setTasks = (newTasks) => (tasks = newTasks);
 
 if (tasks.length !== 0) {

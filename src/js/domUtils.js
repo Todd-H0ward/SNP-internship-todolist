@@ -1,4 +1,10 @@
-import { arrowButton, clearButton, filterButtons, tasksWrapper } from "./main";
+import {
+    arrowButton,
+    clearButton,
+    filterButtons,
+    saveTasks,
+    tasksWrapper,
+} from "./main";
 import { getFilteredTasks, getTaskById, satisfyFilter } from "./utils";
 import { tasks, filter } from "./main";
 
@@ -20,7 +26,7 @@ export const updateTaskElement = (taskId) => {
 
     if (satisfyFilter(taskData, filter)) {
         taskElem.className = "task";
-        updateTaskClasses(taskId, taskData.isActive);
+        updateTaskClasses(taskElem, taskData.isActive);
         taskElem.querySelector(".checkbox").checked = !taskData.isActive;
     } else {
         taskElem.remove();
@@ -45,6 +51,8 @@ export const render = (filter) => {
     tasksWrapper.innerHTML = "";
     const filteredTasks = getFilteredTasks(filter);
     filteredTasks.forEach((task) => renderTask(task));
+    updateTasksCount();
+    saveTasks();
 };
 
 export const clearActiveButton = () => {
@@ -56,7 +64,6 @@ export const removeTaskElement = (taskId) => {
     updateTasksCount();
 };
 
-export const updateTaskClasses = (taskId, isActive) => {
-    const taskElem = getTaskById(taskId);
+export const updateTaskClasses = (taskElem, isActive) => {
     taskElem.classList.toggle("task--finished", !isActive);
 };
