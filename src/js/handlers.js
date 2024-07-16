@@ -63,7 +63,9 @@ export const handleTitleChange = (event) => {
     makeSelection(elem);
     updateTaskClasses(taskId, true);
 
-    elem.addEventListener("focusout", () => saveTaskTitle(elem, taskId));
+    elem.addEventListener("focusout", () =>
+        saveTaskTitle(elem, taskId, titleCopy),
+    );
     elem.addEventListener("keydown", (event) =>
         handleEditEvents(event, elem, titleCopy, taskId),
     );
@@ -71,9 +73,12 @@ export const handleTitleChange = (event) => {
 
 export const saveTaskTitle = (elem, taskId) => {
     clearSelection(elem);
+
+    const titleCopy = elem.textContent;
     const title = elem.textContent.trim();
+
     if (title.length === 0) {
-        handleTaskDelete(taskId);
+        elem.textContent = titleCopy;
     } else {
         elem.textContent = title;
         const task = tasks.find((task) => task.id === taskId);
