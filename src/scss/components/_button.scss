@@ -6,7 +6,9 @@
     border-radius: 5px;
     outline: 1px solid $black;
     cursor: pointer;
-    transition: background .4s, color .2s;
+    transition:
+        background 0.4s,
+        color 0.2s;
 
     &:hover {
         color: $white;

@@ -8,7 +8,7 @@
     color: $black;
     background: $white;
     border-bottom: 1px solid $gray-300;
-    transition: all .2s;
+    transition: all 0.2s;
 
     &--active {
         @extend .active;
@@ -38,7 +38,7 @@
         align-items: center;
         opacity: 0;
         cursor: pointer;
-        transition: opacity .2s;
+        transition: opacity 0.2s;
     }
 
     &--finished {

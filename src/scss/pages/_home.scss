@@ -98,10 +98,12 @@ body {
         text-align: right;
         cursor: pointer;
         opacity: 1;
-        transition: opacity 200ms ease, color .3s;
+        transition:
+            opacity 200ms ease,
+            color 0.3s;
 
         &:hover {
-            color: rgba($black, .6);
+            color: rgba($black, 0.6);
         }
     }
 }

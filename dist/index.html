@@ -1,56 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Todo list</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="keywords" content="todo list tasks productivity">
     <meta name="description" content="Application for storing and managing your tasks">
 <link rel="icon" href="favicon.svg"><script defer src="bundle.js"></script></head>
-<body>
-    <div class="wrapper">
-        <div class="todos">
-            <div class="todos__container container">
-                <div class="todos__inner">
-                    <h1 class="todos__title">Todos</h1>
-                    <div class="todos__wrapper">
-                        <div class="todos__header">
-                            <input class="todos__input input" type="text" placeholder="What needs to be done?">
-                            <button class="todos__arrow arrow-btn">
-                                <img class="todos__arrow-image" src="./icons/arrow-down.svg" alt="arrow down">
-                            </button>
-                        </div>
-
-                        <div class="todos__controls controls">
-                            <p class="todos__controls-text">
-                                <span class="todos__controls-number number"></span> items left
-                            </p>
-                            <div class="todos__filters filter">
-                                <button class="todos__btn button button--active" data-filter="all">All</button>
-                                <button class="todos__btn button" data-filter="active">Active</button>
-                                <button class="todos__btn button" data-filter="completed">Completed</button>
+    <body>
+        <div class="wrapper">
+            <div class="todos">
+                <div class="todos__container container">
+                    <div class="todos__inner">
+                        <h1 class="todos__title">Todos</h1>
+                        <div class="todos__wrapper">
+                            <div class="todos__header">
+                                <input class="todos__input input" type="text" placeholder="What needs to be done?">
+                                <button class="todos__arrow arrow-btn">
+                                    <img class="todos__arrow-image" src="./icons/arrow-down.svg" alt="arrow down"/>
+                                </button>
                             </div>
-                            <button class="todos__clear clear">Clear completed</button>
-                        </div>
 
-                        <ul class="todos__tasks tasks-wrapper">
-                            <template id="task-template">
-                                <li class="task" data-id="">
-                                    <input class="task__checkbox checkbox" type="checkbox">
-                                    <div class="task__inner">
-                                        <span class="task__title title"></span>
-                                        <button class="task__btn">
-                                            <img class="delete" src="./icons/cross.svg" alt="delete icon">
-                                        </button>
-                                    </div>
-                                </li>
-                            </template>
-                        </ul>
+                            <div class="todos__controls controls">
+                                <p class="todos__controls-text">
+                                    <span class="todos__controls-number number"></span> items left
+                                </p>
+                                <div class="todos__filters filter">
+                                    <button class="todos__btn button button--active" data-filter="all">All</button>
+                                    <button class="todos__btn button" data-filter="active">Active</button>
+                                    <button class="todos__btn button" data-filter="completed">Completed</button>
+                                </div>
+                                <button class="todos__clear clear">Clear completed</button>
+                            </div>
+
+                            <ul class="todos__tasks tasks-wrapper">
+                                <template id="task-template">
+                                    <li class="task" data-id="">
+                                        <input class="task__checkbox checkbox" type="checkbox"/>
+                                        <div class="task__inner">
+                                            <span class="task__title title"></span>
+                                            <button class="task__btn">
+                                                <img class="delete" src="./icons/cross.svg" alt="delete icon"/>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
                     </div>
+                    <p class="todos__hint">Double-click to edit a todo</p>
                 </div>
-                <p class="todos__hint">Double-click to edit a todo</p>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
