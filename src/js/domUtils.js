@@ -9,6 +9,8 @@ import {
 } from "./main";
 import {getTaskById, satisfyFilter} from "./utils";
 
+const taskTemplate = document.getElementById("task-template");
+
 export const updateTasksCount = () => {
     const tasksCount = todoList.tasks.length;
     const activeTasksCount = todoList.getActiveTasksCount();
@@ -34,22 +36,13 @@ export const updateTaskElement = taskId => {
 };
 
 export const renderTask = task => {
-    const taskElem = document.createElement("li");
-    taskElem.className = "task";
+    const template = taskTemplate.content.cloneNode(true);
+    const taskElem = template.querySelector(".task");
+    taskElem.querySelector(".checkbox").checked = task.isActive;
+    taskElem.querySelector(".title").textContent = task.title;
     taskElem.dataset.id = task.id;
-
-    taskElem.innerHTML = `
-        <input class="task__checkbox checkbox" type="checkbox" ${task.isActive ? "" : "checked"}>
-        <div class="task__inner">
-            <span class="task__title title">${task.title}</span>
-            <button class="task__btn">
-                <img class="delete" src="./icons/cross.svg" alt="delete icon">
-            </button>
-        </div>
-    `;
-
+    taskElem.classList.toggle("task--finished", !task.isActive);
     tasksWrapper.appendChild(taskElem);
-    updateTaskClasses(task.id, task.isActive);
 };
 
 export const render = filter => {

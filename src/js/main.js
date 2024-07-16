@@ -1,4 +1,4 @@
-import "./../scss/main.scss";
+import "../scss/main.scss";
 import {
     clearActiveButton,
     render,
@@ -13,16 +13,16 @@ import {
 } from "./handlers";
 import {TodoList} from "./todoList.js";
 
-export const input = document.querySelector(".input");
-export const controls = document.querySelector(".controls");
-export const tasksWrapper = document.querySelector(".tasks-wrapper");
-export const appWrapper = document.querySelector(".todos__wrapper");
-export const controlsNumber = document.querySelector(".number");
-export const filterButtons = document.querySelectorAll(".todos__btn");
-export const arrowButton = document.querySelector(".arrow-btn");
-export const clearButton = document.querySelector(".clear");
+export const todosWrapper = document.querySelector(".todos__wrapper");
+export const input = todosWrapper.querySelector(".input");
+export const controls = todosWrapper.querySelector(".controls");
+export const tasksWrapper = todosWrapper.querySelector(".tasks-wrapper");
+export const controlsNumber = todosWrapper.querySelector(".number");
+export const filterButtons = todosWrapper.querySelectorAll(".todos__btn");
+export const arrowButton = todosWrapper.querySelector(".arrow-btn");
+export const clearButton = todosWrapper.querySelector(".clear");
 
-export const todoList = new TodoList(".tasks-wrapper");
+export const todoList = new TodoList();
 
 filterButtons.forEach(btn =>
     btn.addEventListener("click", () => {
@@ -34,7 +34,7 @@ filterButtons.forEach(btn =>
 );
 
 window.addEventListener("click", event => {
-    if (!appWrapper.contains(event.target)) addTask();
+    if (!todosWrapper.contains(event.target)) addTask();
 });
 input.addEventListener("keydown", event => {
     if (event.key === "Enter") addTask();
