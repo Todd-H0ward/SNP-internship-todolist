@@ -1,17 +1,15 @@
 import "../scss/main.scss";
-import { clearActiveButton, render, updateTasksCount } from "./domUtils";
 import {
-    addTask,
-    handleClearFinished,
-    handleTaskAction,
-    handleTitleChange,
-    handleToggleAll,
-} from "./handlers";
+    clearActiveButton,
+    render,
+    todosWrapper,
+    updateTasksCount,
+} from "./domUtils";
+import { addTask, handleClearFinished, handleToggleAll } from "./handlers";
 
-export const todosWrapper = document.querySelector(".todos__wrapper");
 export const input = todosWrapper.querySelector(".input");
-export const tasksWrapper = todosWrapper.querySelector(".tasks-wrapper");
-export const filterButtons = todosWrapper.querySelectorAll(".todos__btn");
+export const todosFilter = todosWrapper.querySelector(".todos__filters");
+export const filterButtons = todosFilter.querySelectorAll(".todos__btn");
 export const arrowButton = todosWrapper.querySelector(".arrow-btn");
 export const clearButton = todosWrapper.querySelector(".clear");
 
@@ -23,40 +21,34 @@ filterButtons.forEach((btn) =>
         render(filterValue);
         updateTasksCount();
         filter = filterValue;
+        saveTasks();
     }),
 );
 
+arrowButton.addEventListener("click", handleToggleAll);
+clearButton.addEventListener("click", handleClearFinished);
 window.addEventListener("click", (event) => {
     if (!todosWrapper.contains(event.target)) addTask();
 });
-
 input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") addTask();
 });
 
-tasksWrapper.addEventListener("click", handleTaskAction);
-tasksWrapper.addEventListener("dblclick", handleTitleChange);
-tasksWrapper.addEventListener("touchend", handleTitleChange);
-arrowButton.addEventListener("click", handleToggleAll);
-clearButton.addEventListener("click", handleClearFinished);
-
 const loadTasks = () => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks"));
     if (!savedTasks) return { filter: "all", tasks: [] };
-    return {
-        filter: savedTasks.filter,
-        tasks: savedTasks.tasks,
-    };
+    return savedTasks;
 };
 
 export const saveTasks = () =>
     localStorage.setItem("tasks", JSON.stringify({ filter, tasks }));
+
 export let { filter, tasks } = loadTasks();
 export const setTasks = (newTasks) => (tasks = newTasks);
 
 if (tasks.length !== 0) {
     clearActiveButton();
-    document
+    todosFilter
         .querySelector(`[data-filter="${filter}"]`)
         .classList.add("button--active");
     render(filter);

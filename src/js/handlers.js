@@ -1,17 +1,10 @@
 import {
-    removeTaskElement,
     render,
     renderTask,
     updateTaskClasses,
-    updateTaskElement,
     updateTasksCount,
 } from "./domUtils";
-import {
-    clearSelection,
-    makeOutline,
-    makeSelection,
-    satisfyFilter,
-} from "./utils";
+import { clearSelection, makeSelection, satisfyFilter } from "./utils";
 import { filter, input, saveTasks, setTasks, tasks } from "./main";
 
 export const addTask = () => {
@@ -30,45 +23,25 @@ export const addTask = () => {
     }
 };
 
-export const handleTaskDelete = (taskId) => {
+export const handleTaskDelete = (elem, taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
-    saveTasks();
-    removeTaskElement(taskId);
-};
-
-export const handleTaskAction = (event) => {
-    const elem = event.target;
-    const task = elem.closest(".task");
-    if (!task) return;
-
-    const taskId = Number(task.dataset.id);
-    if (elem.classList.contains("checkbox")) {
-        const currentTask = tasks.find((task) => task.id === taskId);
-        currentTask.isActive = !currentTask.isActive;
-        updateTaskElement(taskId);
-        makeOutline(task, elem);
-    } else if (elem.classList.contains("delete")) {
-        handleTaskDelete(taskId);
-    }
-
+    elem?.remove();
+    updateTasksCount();
     saveTasks();
 };
 
-export const handleTitleChange = (event) => {
-    const elem = event.target;
-    if (!elem.classList.contains("title")) return;
-    const taskId = Number(elem.closest(".task").dataset.id);
-    const task = tasks.find((task) => task.id === taskId);
+export const handleTitleChange = (elem, taskId) => {
+    const taskData = tasks.find((task) => task.id === taskId);
 
     makeSelection(elem);
     updateTaskClasses(elem, true);
 
-    elem.addEventListener("focusout", () => saveTaskTitle(elem, task));
+    elem.addEventListener("focusout", () => saveTaskTitle(elem, taskData));
     elem.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
-            saveTaskTitle(elem, task);
+            saveTaskTitle(elem, taskData);
         } else if (event.key === "Escape") {
-            elem.textContent = task.title;
+            elem.textContent = taskData.title;
             clearSelection(elem);
         }
     });
