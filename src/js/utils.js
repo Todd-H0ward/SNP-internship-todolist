@@ -1,4 +1,4 @@
-import { tasks, tasksWrapper } from "./main.js";
+import { tasks } from "./main.js";
 
 export const satisfyFilter = (task, filter) => {
     switch (filter) {
@@ -13,10 +13,6 @@ export const satisfyFilter = (task, filter) => {
     }
 };
 
-export const getTaskById = (taskId) => {
-    return tasksWrapper.querySelector(`[data-id="${taskId}"]`);
-};
-
 export const getFilteredTasks = (filter) => {
     if (filter === "active") {
         return tasks.filter((task) => task.isActive);
@@ -26,11 +22,11 @@ export const getFilteredTasks = (filter) => {
     return tasks;
 };
 
-export const makeOutline = (task, elem) => {
-    task.classList.add("task--active");
+export const makeOutline = (taskElem, elem) => {
+    taskElem.classList.add("task--active");
     window.addEventListener("click", (event) => {
         if (!elem.contains(event.target)) {
-            task.classList.remove("task--active");
+            taskElem.classList.remove("task--active");
         }
     });
 };
