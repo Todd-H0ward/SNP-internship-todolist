@@ -28,12 +28,16 @@ html {
 }
 
 /* Reapply the pointer cursor for anchor tags */
-a, button {
+a,
+button {
   cursor: revert;
 }
 
 /* Remove list styles (bullets/numbers) */
-ol, ul, menu, summary {
+ol,
+ul,
+menu,
+summary {
   list-style: none;
 }
 
@@ -49,7 +53,8 @@ table {
 }
 
 /* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
-input, textarea {
+input,
+textarea {
   -webkit-user-select: auto;
 }
 
@@ -137,25 +142,25 @@ meter {
 /* Colors */
 /* Colors */
 .active, .task__title--active, .task--active, .input:focus {
-  box-shadow: inset 0 0 1px 2px #3B7E7B;
+  box-shadow: inset 0 0 1px 2px #3b7e7b;
 }
 
 /* Colors */
 .button {
   padding: 1px 7px;
-  color: #1B1F2B;
+  color: #1b1f2b;
   border-radius: 5px;
-  outline: 1px solid #1B1F2B;
+  outline: 1px solid #1b1f2b;
   cursor: pointer;
   transition: background 0.4s, color 0.2s;
 }
 .button:hover {
-  color: #FFF;
+  color: #fff;
   background: rgba(27, 31, 43, 0.7);
 }
 .button:active {
-  color: #FFF;
-  background: #1B1F2B;
+  color: #fff;
+  background: #1b1f2b;
 }
 .button--active {
   outline: 3px solid #286562;
@@ -170,7 +175,7 @@ meter {
   flex: none;
   width: clamp(24px, 1.142rem + 1.53vw, 30px);
   height: clamp(24px, 1.142rem + 1.53vw, 30px);
-  border: 1px solid #1B1F2B;
+  border: 1px solid #1b1f2b;
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
@@ -189,16 +194,16 @@ meter {
 .input {
   position: relative;
   padding: clamp(7px, 2.5vw, 15px) clamp(10px, 2.5vw, 20px) clamp(7px, 2.5vw, 15px) clamp(45px, 1.322rem + 6.36vw, 70px);
-  color: #1B1F2B;
-  background: #FFF;
-  border: 1px solid #A6A6A6;
+  color: #1b1f2b;
+  background: #fff;
+  border: 1px solid #a6a6a6;
   border-radius: 10px;
   box-shadow: rgba(255, 255, 255, 0.1) 0 0 10px 3px;
   transition: all 0.3s;
 }
 .input::placeholder {
   font-style: italic;
-  color: #A6A6A6;
+  color: #a6a6a6;
 }
 /* Colors */
 .task {
@@ -206,9 +211,9 @@ meter {
   align-items: center;
   gap: clamp(5px, -0.229rem + 2.31vw, 20px);
   padding: clamp(7px, 2.5vw, 15px) clamp(10px, 2.5vw, 20px);
-  color: #1B1F2B;
-  background: #FFF;
-  border-bottom: 1px solid #A6A6A6;
+  color: #1b1f2b;
+  background: #fff;
+  border-bottom: 1px solid #a6a6a6;
   transition: all 0.2s;
 }
 .task__title {
@@ -233,7 +238,7 @@ meter {
 }
 .task--finished {
   text-decoration: line-through;
-  color: #A6A6A6;
+  color: #a6a6a6;
 }
 .task:hover .task__btn {
   opacity: 1;
@@ -248,8 +253,8 @@ meter {
 body {
   font-family: Roboto, sans-serif;
   font-style: normal;
-  color: #FFF;
-  background: #1B1F2B;
+  color: #fff;
+  background: #1b1f2b;
 }
 
 .wrapper {
@@ -275,7 +280,7 @@ body {
   padding: 10px 0;
   text-align: center;
 }
-.todos__wrapper {
+.todos__header {
   position: relative;
 }
 .todos__input {
@@ -286,7 +291,7 @@ body {
   top: 55%;
   left: clamp(0px, -0.596rem + 2.54vw, 10px);
   z-index: 5;
-  display: block;
+  display: none;
   transform: translateY(-50%);
   cursor: pointer;
 }
@@ -301,8 +306,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 8px 10px;
-  color: #1B1F2B;
-  background: #FFF;
+  color: #1b1f2b;
+  background: #fff;
+  border-bottom: 1px solid #a6a6a6;
   border-radius: 10px;
 }
 .todos__controls-text {
