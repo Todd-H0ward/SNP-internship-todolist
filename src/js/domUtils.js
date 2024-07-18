@@ -1,73 +1,85 @@
 import {
     arrowButton,
     clearButton,
-    controls,
-    controlsNumber,
+    filter,
     filterButtons,
-    tasksWrapper,
-    todoList,
+    saveTasks,
+    tasks,
 } from "./main";
-import {getTaskById, satisfyFilter} from "./utils";
+import { getFilteredTasks, makeOutline, satisfyFilter } from "./utils";
+import { handleTaskDelete, handleTitleChange } from "./handlers";
+
+export const todosWrapper = document.querySelector(".todos__wrapper");
+const tasksWrapper = todosWrapper.querySelector(".tasks-wrapper");
+const controls = todosWrapper.querySelector(".controls");
+const controlsNumber = controls.querySelector(".number");
+const taskTemplate = tasksWrapper.querySelector("#task-template");
 
 export const updateTasksCount = () => {
-    const tasksCount = todoList.tasks.length;
-    const activeTasksCount = todoList.getActiveTasksCount();
-    controlsNumber.textContent = activeTasksCount;
-    controls.style.display = tasksCount === 0 ? "none" : "grid";
-    arrowButton.style.display = tasksCount === 0 ? "none" : "block";
-    clearButton.classList.toggle("hidden", activeTasksCount === tasksCount);
+    const activeTasksCount = tasks.filter((task) => task.isActive).length;
+    controlsNumber.textContent = String(activeTasksCount);
+    controls.style.display = tasks.length === 0 ? "none" : "grid";
+    arrowButton.style.display = tasks.length === 0 ? "none" : "block";
+    clearButton.classList.toggle("hidden", activeTasksCount === tasks.length);
 };
 
-export const updateTaskElement = taskId => {
-    const taskElem = getTaskById(taskId);
-    const taskData = todoList.findTask(taskId);
+export const updateTaskElement = (elem, taskId) => {
+    const taskData = tasks.find((task) => task.id === taskId);
+    taskData.isActive = !taskData.isActive;
 
-    if (satisfyFilter(taskData, todoList.filter)) {
-        taskElem.className = "task";
-        updateTaskClasses(taskId, taskData.isActive);
-        taskElem.querySelector(".checkbox").checked = !taskData.isActive;
+    if (satisfyFilter(taskData, filter)) {
+        elem.className = "task";
+        updateTaskClasses(elem, taskData.isActive);
     } else {
-        taskElem.remove();
+        elem?.remove();
     }
 
     updateTasksCount();
+    saveTasks();
 };
 
-export const renderTask = task => {
-    const taskElem = document.createElement("div");
-    taskElem.className = "task";
-    taskElem.dataset.id = task.id;
+export const renderTask = (task) => {
+    const template = taskTemplate.content.cloneNode(true);
+    const taskElem = template.querySelector(".task");
+    const taskCheckbox = taskElem.querySelector(".task__checkbox");
+    const taskBtn = taskElem.querySelector(".task__btn");
+    const taskTitle = taskElem.querySelector(".task__title");
 
-    taskElem.innerHTML = `
-        <input class="task__checkbox checkbox" type="checkbox" ${task.isActive ? "" : "checked"}>
-        <div class="task__inner">
-            <span class="task__title title">${task.title}</span>
-            <button class="task__btn">
-                <img class="delete" src="./icons/cross.svg" alt="delete icon">
-            </button>
-        </div>
-    `;
+    taskCheckbox.checked = !task.isActive;
+    taskTitle.textContent = task.title;
+    taskElem.dataset.id = task.id;
+    taskElem.classList.toggle("task--finished", !task.isActive);
+
+    taskBtn.addEventListener("click", () =>
+        handleTaskDelete(taskElem, task.id),
+    );
+    taskTitle.addEventListener("dblclick", () =>
+        handleTitleChange(taskTitle, task.id),
+    );
+    taskTitle.addEventListener("touch", () =>
+        handleTitleChange(taskTitle, task.id),
+    );
+    taskCheckbox.addEventListener("change", (event) => {
+        updateTaskElement(taskElem, task.id);
+        makeOutline(taskElem, event.target);
+    });
 
     tasksWrapper.appendChild(taskElem);
-    updateTaskClasses(task.id, task.isActive);
 };
 
-export const render = filter => {
+export const render = (filter) => {
     tasksWrapper.innerHTML = "";
-    const filteredTasks = todoList.getFilteredTasks(filter);
-    filteredTasks.forEach(task => renderTask(task));
+    const filteredTasks = getFilteredTasks(filter);
+    filteredTasks.forEach((task) => renderTask(task));
+    updateTasksCount();
+    saveTasks();
 };
 
 export const clearActiveButton = () => {
-    filterButtons.forEach(btn => btn.classList.remove("button--active"));
+    filterButtons.forEach((btn) => btn.classList.remove("button--active"));
 };
 
-export const removeTaskElement = taskId => {
-    getTaskById(taskId)?.remove();
-    updateTasksCount();
-};
-
-export const updateTaskClasses = (taskId, isActive) => {
-    const taskElem = getTaskById(taskId);
-    taskElem.classList.toggle("task--finished", !isActive);
+export const updateTaskClasses = (taskElem, isActive) => {
+    const closestTask = taskElem.closest(".task");
+    closestTask.classList.toggle("task--finished", !isActive);
 };
