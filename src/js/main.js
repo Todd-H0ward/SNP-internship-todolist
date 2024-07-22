@@ -1,17 +1,14 @@
 import "../scss/main.scss";
-import {
-    clearActiveButton,
-    render,
-    todosWrapper,
-    updateTasksCount,
-} from "./domUtils";
 import { addTask, handleClearFinished, handleToggleAll } from "./handlers";
-
-export const input = todosWrapper.querySelector(".input");
-export const todosFilter = todosWrapper.querySelector(".todos__filters");
-export const filterButtons = todosFilter.querySelectorAll(".todos__btn");
-export const arrowButton = todosWrapper.querySelector(".arrow-btn");
-export const clearButton = todosWrapper.querySelector(".clear");
+import {
+    arrowButton,
+    clearButton,
+    filterButtons,
+    input,
+    todosFilter,
+    todosWrapper,
+} from "./domElements";
+import { clearActiveButton, render, updateTasksCount } from "./domUtils";
 
 filterButtons.forEach((btn) =>
     btn.addEventListener("click", () => {

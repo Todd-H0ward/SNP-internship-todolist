@@ -1,11 +1,12 @@
+import { input } from "./domElements";
+import { filter, saveTasks, setTasks, tasks } from "./main";
+import { clearSelection, makeSelection, satisfyFilter } from "./utils";
 import {
     render,
     renderTask,
     updateTaskClasses,
     updateTasksCount,
 } from "./domUtils";
-import { clearSelection, makeSelection, satisfyFilter } from "./utils";
-import { filter, input, saveTasks, setTasks, tasks } from "./main";
 
 export const addTask = () => {
     const inputValue = input.value.trim();

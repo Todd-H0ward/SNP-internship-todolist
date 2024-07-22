@@ -1,19 +1,15 @@
+import { filter, saveTasks, tasks } from "./main";
 import {
     arrowButton,
     clearButton,
-    filter,
+    controls,
+    controlsNumber,
     filterButtons,
-    saveTasks,
-    tasks,
-} from "./main";
+    tasksWrapper,
+    taskTemplate,
+} from "./domElements";
 import { getFilteredTasks, makeOutline, satisfyFilter } from "./utils";
 import { handleTaskDelete, handleTitleChange } from "./handlers";
-
-export const todosWrapper = document.querySelector(".todos__wrapper");
-const tasksWrapper = todosWrapper.querySelector(".tasks-wrapper");
-const controls = todosWrapper.querySelector(".controls");
-const controlsNumber = controls.querySelector(".number");
-const taskTemplate = tasksWrapper.querySelector("#task-template");
 
 export const updateTasksCount = () => {
     const activeTasksCount = tasks.filter((task) => task.isActive).length;
