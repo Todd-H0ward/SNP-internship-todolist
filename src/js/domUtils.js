@@ -1,4 +1,4 @@
-import { filter, saveTasks, tasks } from "./main";
+import { filter, tasks } from "./main";
 import {
     arrowButton,
     clearButton,
@@ -8,7 +8,12 @@ import {
     tasksWrapper,
     taskTemplate,
 } from "./domElements";
-import { getFilteredTasks, makeOutline, satisfyFilter } from "./utils";
+import {
+    getFilteredTasks,
+    makeOutline,
+    satisfyFilter,
+    saveTasks,
+} from "./utils";
 import { handleTaskDelete, handleTitleChange } from "./handlers";
 
 export const updateTasksCount = () => {
@@ -46,19 +51,18 @@ export const renderTask = (task) => {
     taskElem.dataset.id = task.id;
     taskElem.classList.toggle("task--finished", !task.isActive);
 
-    taskBtn.addEventListener("click", () =>
-        handleTaskDelete(taskElem, task.id),
-    );
-    taskTitle.addEventListener("dblclick", () =>
-        handleTitleChange(taskTitle, task.id),
-    );
-    taskTitle.addEventListener("touch", () =>
-        handleTitleChange(taskTitle, task.id),
-    );
-    taskCheckbox.addEventListener("change", (event) => {
+    const handleTaskBtnClick = () => handleTaskDelete(taskElem, task.id);
+    const handleTaskTitleClick = () => handleTitleChange(taskTitle, task.id);
+    const handleTaskTitleTouch = () => handleTitleChange(taskTitle, task.id);
+    const handleTaskCheckboxChange = (event) => {
         updateTaskElement(taskElem, task.id);
         makeOutline(taskElem, event.target);
-    });
+    };
+
+    taskBtn.addEventListener("click", handleTaskBtnClick);
+    taskTitle.addEventListener("dblclick", handleTaskTitleClick);
+    taskTitle.addEventListener("touch", handleTaskTitleTouch);
+    taskCheckbox.addEventListener("change", handleTaskCheckboxChange);
 
     tasksWrapper.appendChild(taskElem);
 };

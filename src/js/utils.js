@@ -1,4 +1,13 @@
-import { tasks } from "./main.js";
+import { filter, tasks } from "./main.js";
+
+export const loadTasks = () => {
+    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (!savedTasks) return { filter: "all", tasks: [] };
+    return savedTasks;
+};
+
+export const saveTasks = () =>
+    localStorage.setItem("tasks", JSON.stringify({ filter, tasks }));
 
 export const satisfyFilter = (task, filter) => {
     switch (filter) {
@@ -24,11 +33,15 @@ export const getFilteredTasks = (filter) => {
 
 export const makeOutline = (taskElem, elem) => {
     taskElem.classList.add("task--active");
-    window.addEventListener("click", (event) => {
+
+    const handleOutsideClick = (event) => {
         if (!elem.contains(event.target)) {
             taskElem.classList.remove("task--active");
+            window.removeEventListener("click", handleOutsideClick);
         }
-    });
+    };
+
+    window.addEventListener("click", handleOutsideClick);
 };
 
 export const makeSelection = (elem) => {

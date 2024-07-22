@@ -1,47 +1,34 @@
 import "../scss/main.scss";
-import { addTask, handleClearFinished, handleToggleAll } from "./handlers";
+import {
+    addTaskOnEnter,
+    handleClearFinished,
+    handleClickOutsideTaskInput,
+    handleFilterSelection,
+    handleToggleAll,
+} from "./handlers";
 import {
     arrowButton,
     clearButton,
     filterButtons,
     input,
     todosFilter,
-    todosWrapper,
 } from "./domElements";
 import { clearActiveButton, render, updateTasksCount } from "./domUtils";
+import { loadTasks } from "./utils";
 
-filterButtons.forEach((btn) =>
-    btn.addEventListener("click", () => {
-        const filterValue = btn.dataset.filter;
-        clearActiveButton();
-        btn.classList.add("button--active");
-        render(filterValue);
-        updateTasksCount();
-        filter = filterValue;
-        saveTasks();
-    }),
-);
+export let { filter, tasks } = loadTasks();
+
+export const setTasks = (newTasks) => (tasks = newTasks);
+export const setFilter = (newFilter) => (filter = newFilter);
 
 arrowButton.addEventListener("click", handleToggleAll);
 clearButton.addEventListener("click", handleClearFinished);
-window.addEventListener("click", (event) => {
-    if (!todosWrapper.contains(event.target)) addTask();
-});
-input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") addTask();
-});
+window.addEventListener("click", handleClickOutsideTaskInput);
+input.addEventListener("keydown", addTaskOnEnter);
 
-const loadTasks = () => {
-    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (!savedTasks) return { filter: "all", tasks: [] };
-    return savedTasks;
-};
-
-export const saveTasks = () =>
-    localStorage.setItem("tasks", JSON.stringify({ filter, tasks }));
-
-export let { filter, tasks } = loadTasks();
-export const setTasks = (newTasks) => (tasks = newTasks);
+filterButtons.forEach((btn) =>
+    btn.addEventListener("click", handleFilterSelection),
+);
 
 if (tasks.length !== 0) {
     clearActiveButton();

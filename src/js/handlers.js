@@ -1,7 +1,13 @@
-import { input } from "./domElements";
-import { filter, saveTasks, setTasks, tasks } from "./main";
-import { clearSelection, makeSelection, satisfyFilter } from "./utils";
+import { input, todosWrapper } from "./domElements";
+import { filter, setFilter, setTasks, tasks } from "./main";
 import {
+    clearSelection,
+    makeSelection,
+    satisfyFilter,
+    saveTasks,
+} from "./utils";
+import {
+    clearActiveButton,
     render,
     renderTask,
     updateTaskClasses,
@@ -23,6 +29,24 @@ export const addTask = () => {
         updateTasksCount();
     }
 };
+
+export const handleClickOutsideTaskInput = (event) => {
+    if (!todosWrapper.contains(event.target)) addTask();
+};
+
+export const addTaskOnEnter = (event) => {
+    if (event.key === "Enter") addTask();
+};
+
+export function handleFilterSelection() {
+    const filterValue = this.dataset.filter;
+    clearActiveButton();
+    this.classList.add("button--active");
+    render(filterValue);
+    updateTasksCount();
+    setFilter(filterValue);
+    saveTasks();
+}
 
 export const handleTaskDelete = (elem, taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
