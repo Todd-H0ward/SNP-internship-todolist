@@ -85,58 +85,6 @@ const updateTasksCount = () => {
     clearButton.classList.toggle("hidden", activeTasksCount === tasks.length);
 };
 
-const renderTask = (task) => {
-    const template = taskTemplate.content.cloneNode(true);
-    const taskElem = template.querySelector(".task");
-    const taskCheckbox = taskElem.querySelector(".task__checkbox");
-    const taskBtn = taskElem.querySelector(".task__btn");
-    const taskTitle = taskElem.querySelector(".task__title");
-
-    taskCheckbox.checked = !task.isActive;
-    taskTitle.textContent = task.title;
-    taskElem.dataset.id = task.id;
-    taskElem.classList.toggle("task--finished", !task.isActive);
-
-    const handleTaskBtnClick = () => handleTaskDelete(taskElem, task.id);
-    const handleTaskTitleClick = () => handleTitleChange(taskTitle, task.id);
-    const handleTaskCheckboxChange = (event) => {
-        updateTaskElement(taskElem, task.id);
-        makeOutline(taskElem, event.target);
-    };
-
-    taskBtn.addEventListener("click", handleTaskBtnClick);
-    taskTitle.addEventListener("dblclick", handleTaskTitleClick);
-    taskTitle.addEventListener("touchstart", handleTaskTitleClick);
-    taskCheckbox.addEventListener("change", handleTaskCheckboxChange);
-
-    tasksWrapper.appendChild(taskElem);
-};
-
-const render = (filter) => {
-    tasksWrapper.innerHTML = "";
-    const filteredTasks = getFilteredTasks(filter);
-    filteredTasks.forEach((task) => renderTask(task));
-    updateTasksCount();
-    saveTasks();
-};
-
-// Task handlers
-const addTask = () => {
-    const inputValue = input.value.trim();
-    if (inputValue) {
-        const task = {
-            id: Date.now(),
-            title: inputValue,
-            isActive: true,
-        };
-        tasks.push(task);
-        input.value = "";
-        if (satisfyFilter(task, filter)) renderTask(task);
-        saveTasks();
-        updateTasksCount();
-    }
-};
-
 const updateTaskElement = (elem, taskId) => {
     const taskData = tasks.find((task) => task.id === taskId);
     taskData.isActive = !taskData.isActive;
@@ -192,6 +140,57 @@ const handleTitleChange = (elem, taskId) => {
 
     elem.addEventListener("focusout", saveTaskTitleOnFocusout);
     elem.addEventListener("keydown", handleKeydownOnTaskTitle);
+};
+
+const renderTask = (task) => {
+    const template = taskTemplate.content.cloneNode(true);
+    const taskElem = template.querySelector(".task");
+    const taskCheckbox = taskElem.querySelector(".task__checkbox");
+    const taskBtn = taskElem.querySelector(".task__btn");
+    const taskTitle = taskElem.querySelector(".task__title");
+
+    taskCheckbox.checked = !task.isActive;
+    taskTitle.textContent = task.title;
+    taskElem.dataset.id = task.id;
+    taskElem.classList.toggle("task--finished", !task.isActive);
+
+    const handleTaskBtnClick = () => handleTaskDelete(taskElem, task.id);
+    const handleTaskTitleClick = () => handleTitleChange(taskTitle, task.id);
+    const handleTaskCheckboxChange = (event) => {
+        updateTaskElement(taskElem, task.id);
+        makeOutline(taskElem, event.target);
+    };
+
+    taskBtn.addEventListener("click", handleTaskBtnClick);
+    taskTitle.addEventListener("dblclick", handleTaskTitleClick);
+    taskTitle.addEventListener("touchstart", handleTaskTitleClick);
+    taskCheckbox.addEventListener("change", handleTaskCheckboxChange);
+
+    tasksWrapper.appendChild(taskElem);
+};
+
+const render = (filter) => {
+    tasksWrapper.innerHTML = "";
+    const filteredTasks = getFilteredTasks(filter);
+    filteredTasks.forEach((task) => renderTask(task));
+    updateTasksCount();
+    saveTasks();
+};
+
+const addTask = () => {
+    const inputValue = input.value.trim();
+    if (inputValue) {
+        const task = {
+            id: Date.now(),
+            title: inputValue,
+            isActive: true,
+        };
+        tasks.push(task);
+        input.value = "";
+        if (satisfyFilter(task, filter)) renderTask(task);
+        saveTasks();
+        updateTasksCount();
+    }
 };
 
 // Event listener functions
