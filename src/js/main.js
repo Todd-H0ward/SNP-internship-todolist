@@ -210,7 +210,7 @@ const handleFilterSelection = (event) => {
     render(filterValue);
     updateTasksCount();
     filter = filterValue;
-    saveTasks(tasks, filterValue);
+    saveTasks();
 };
 
 const handleClearFinished = () => {
