@@ -56,8 +56,21 @@ body {
     }
 
     &__tasks {
+        max-height: 60svh;
+        background: $scrollbar-bg;
         border-radius: $border-radius;
-        overflow: hidden;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $scrollbar;
+            border: 3px solid rgba(0, 0, 0, 0);
+            border-radius: 10px;
+            background-clip: padding-box;
+        }
     }
 
     &__controls {
@@ -124,6 +137,17 @@ body {
             grid-row: 2;
             grid-column: span 2;
             justify-content: center;
+        }
+
+        &__tasks {
+            &::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-width: 1px;
+                background: rgba($black, .8);
+            }
         }
     }
 }
