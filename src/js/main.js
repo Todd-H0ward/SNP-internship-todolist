@@ -12,11 +12,10 @@ const todosFilter = todosWrapper.querySelector(".todos__filters");
 const filterButtons = todosFilter.querySelectorAll(".todos__btn");
 
 const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-let filter = savedTasks.filter ?? "all";
-let tasks = savedTasks.tasks ?? [];
+let filter = savedTasks ? savedTasks.filter : "all";
+let tasks = savedTasks ? savedTasks.tasks : [];
 
-const saveTasks = () =>
-    localStorage.setItem("tasks", JSON.stringify({ filter, tasks }));
+const saveTasks = () => localStorage.setItem("tasks", JSON.stringify({ filter, tasks }));
 
 // Utilities
 const satisfyFilter = (task, filter) => {
@@ -41,17 +40,16 @@ const getFilteredTasks = (filter) => {
     return tasks;
 };
 
+const handleOutsideClick = (event, elem, taskElem) => {
+    if (!elem.contains(event.target)) {
+        taskElem.classList.remove("task--active");
+        window.removeEventListener("click", handleOutsideClick);
+    }
+};
+
 const makeOutline = (taskElem, elem) => {
     taskElem.classList.add("task--active");
-
-    const handleOutsideClick = (event) => {
-        if (!elem.contains(event.target)) {
-            taskElem.classList.remove("task--active");
-            window.removeEventListener("click", handleOutsideClick);
-        }
-    };
-
-    window.addEventListener("click", handleOutsideClick);
+    window.addEventListener("click", (event) => handleOutsideClick(event, elem, taskElem));
 };
 
 const makeSelection = (elem) => {
@@ -122,24 +120,23 @@ const saveTaskTitle = (elem, task) => {
     saveTasks();
 };
 
+const handleKeyDown = (event, elem, taskData) => {
+    if (event.key === "Enter") {
+        saveTaskTitle(elem, taskData);
+    } else if (event.key === "Escape") {
+        elem.textContent = taskData.title;
+        clearSelection(elem);
+    }
+};
+
 const handleTitleChange = (elem, taskId) => {
     const taskData = tasks.find((task) => task.id === taskId);
 
     makeSelection(elem);
     updateTaskClasses(elem, true);
 
-    const saveTaskTitleOnFocusout = () => saveTaskTitle(elem, taskData);
-    const handleKeydownOnTaskTitle = (event) => {
-        if (event.key === "Enter") {
-            saveTaskTitle(elem, taskData);
-        } else if (event.key === "Escape") {
-            elem.textContent = taskData.title;
-            clearSelection(elem);
-        }
-    };
-
-    elem.addEventListener("focusout", saveTaskTitleOnFocusout);
-    elem.addEventListener("keydown", handleKeydownOnTaskTitle);
+    elem.addEventListener("focusout", () => saveTaskTitle(elem, taskData));
+    elem.addEventListener("keydown", (event) => handleKeyDown(event, elem, taskData));
 };
 
 const renderTask = (task) => {
@@ -154,17 +151,13 @@ const renderTask = (task) => {
     taskElem.dataset.id = task.id;
     taskElem.classList.toggle("task--finished", !task.isActive);
 
-    const handleTaskBtnClick = () => handleTaskDelete(taskElem, task.id);
-    const handleTaskTitleClick = () => handleTitleChange(taskTitle, task.id);
-    const handleTaskCheckboxChange = (event) => {
+    taskBtn.addEventListener("click", () => handleTaskDelete(taskElem, task.id));
+    taskTitle.addEventListener("dblclick", () => handleTitleChange(taskTitle, task.id));
+    taskTitle.addEventListener("touchstart", () => handleTitleChange(taskTitle, task.id), { passive: true });
+    taskCheckbox.addEventListener("change", (event) => {
         updateTaskElement(taskElem, task.id);
         makeOutline(taskElem, event.target);
-    };
-
-    taskBtn.addEventListener("click", handleTaskBtnClick);
-    taskTitle.addEventListener("dblclick", handleTaskTitleClick);
-    taskTitle.addEventListener("touchstart", handleTaskTitleClick);
-    taskCheckbox.addEventListener("change", handleTaskCheckboxChange);
+    });
 
     tasksWrapper.appendChild(taskElem);
 };
@@ -230,15 +223,11 @@ clearButton.addEventListener("click", handleClearFinished);
 window.addEventListener("click", handleClickOutsideTaskInput);
 input.addEventListener("keydown", addTaskOnEnter);
 
-filterButtons.forEach((btn) =>
-    btn.addEventListener("click", handleFilterSelection),
-);
+filterButtons.forEach((btn) => btn.addEventListener("click", handleFilterSelection));
 
 if (tasks.length !== 0) {
     clearActiveButton();
-    todosFilter
-        .querySelector(`[data-filter="${filter}"]`)
-        .classList.add("button--active");
+    todosFilter.querySelector(`[data-filter="${filter}"]`).classList.add("button--active");
     render(filter);
     updateTasksCount();
 }

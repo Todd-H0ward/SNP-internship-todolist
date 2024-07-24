@@ -296,8 +296,19 @@ body {
   cursor: pointer;
 }
 .todos__tasks {
+  max-height: 60svh;
+  background: #e4e4e4;
   border-radius: 10px;
-  overflow: hidden;
+  overflow-y: auto;
+}
+.todos__tasks::-webkit-scrollbar {
+  width: 14px;
+}
+.todos__tasks::-webkit-scrollbar-thumb {
+  background: #616161;
+  border: 3px solid rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  background-clip: padding-box;
 }
 .todos__controls {
   position: relative;
@@ -351,6 +362,13 @@ body {
     grid-row: 2;
     grid-column: span 2;
     justify-content: center;
+  }
+  .todos__tasks::-webkit-scrollbar {
+    width: 5px;
+  }
+  .todos__tasks::-webkit-scrollbar-thumb {
+    border-width: 1px;
+    background: rgba(27, 31, 43, 0.8);
   }
 }
 
