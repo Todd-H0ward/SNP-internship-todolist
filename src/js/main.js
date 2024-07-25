@@ -11,11 +11,19 @@ const clearButton = todosWrapper.querySelector(".clear");
 const todosFilter = todosWrapper.querySelector(".todos__filters");
 const filterButtons = todosFilter.querySelectorAll(".todos__btn");
 
-const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-let filter = savedTasks ? savedTasks.filter : "all";
-let tasks = savedTasks ? savedTasks.tasks : [];
+const FILTER_KEY = "filter";
+const TASKS_KEY = "tasks";
 
-const saveTasks = () => localStorage.setItem("tasks", JSON.stringify({ filter, tasks }));
+if (localStorage.filter && typeof JSON.parse(localStorage.filter) !== "string") localStorage.removeItem(FILTER_KEY);
+if (localStorage.tasks && !Array.isArray(JSON.parse(localStorage.tasks))) localStorage.removeItem(TASKS_KEY);
+
+let filter = localStorage.filter ? JSON.parse(localStorage.getItem(FILTER_KEY)) : "all";
+let tasks = localStorage.tasks ? JSON.parse(localStorage.getItem(TASKS_KEY)) : [];
+
+const saveTasks = () => {
+    localStorage.setItem(FILTER_KEY, JSON.stringify(filter));
+    localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+};
 
 // Utilities
 const satisfyFilter = (task, filter) => {
