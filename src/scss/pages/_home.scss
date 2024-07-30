@@ -70,6 +70,15 @@ body {
             border: 3px solid rgba(0, 0, 0, 0);
             border-radius: 10px;
             background-clip: padding-box;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba($scrollbar, .9);
+            }
+
+            &:active {
+                background-color: rgba($scrollbar, .7);
+            }
         }
     }
 
