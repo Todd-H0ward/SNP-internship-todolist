@@ -48,16 +48,19 @@ const getFilteredTasks = (filter) => {
     return tasks;
 };
 
-const handleOutsideClick = (event, elem, taskElem) => {
-    if (!elem.contains(event.target)) {
-        taskElem.classList.remove("task--active");
-        window.removeEventListener("click", handleOutsideClick);
-    }
+const handleOutsideClick = (taskElem, elem) => {
+    return function handler(event) {
+        if (!elem.contains(event.target)) {
+            taskElem.classList.remove("task--active");
+            window.removeEventListener("click", handler);
+        }
+    };
 };
 
 const makeOutline = (taskElem, elem) => {
     taskElem.classList.add("task--active");
-    window.addEventListener("click", (event) => handleOutsideClick(event, elem, taskElem));
+    const outsideClickFunction = handleOutsideClick(taskElem, elem);
+    window.addEventListener("click", outsideClickFunction);
 };
 
 const makeSelection = (elem) => {
